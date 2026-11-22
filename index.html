@@ -6,149 +6,335 @@
 <title>GEN7PLAY</title>
 <style>
 :root{
-  --bg:#080b12;
-  --panel:#111827;
-  --text:#f1f5f9;
+  --bg:#05070d;
+  --panel:#0f172a;
+  --panel-hover:#1e293b;
+  --text:#f8fafc;
   --muted:#94a3b8;
   --accent:#00f5a0;
-  --blue:#00bfff;
+  --accent-glow:rgba(0,245,160,0.4);
+  --blue:#00d4ff;
+  --purple:#a855f7;
+  --border:rgba(255,255,255,0.08);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{
-  font-family:Arial,sans-serif;
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
   background:var(--bg);
   color:var(--text);
   scroll-behavior:smooth;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(0,245,160,0.08), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(0,212,255,0.06), transparent 40%);
 }
 header{
   position:sticky;top:0;z-index:100;
-  background:rgba(8,11,18,.95);
-  border-bottom:1px solid #1e293b;
-  padding:18px 8%;
+  background:rgba(5,7,13,.85);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:16px 6%;
   display:flex;justify-content:space-between;
-  align-items:center;flex-wrap:wrap;gap:15px;
+  align-items:center;flex-wrap:wrap;gap:12px;
 }
-.logo{font-size:23px;font-weight:bold;color:var(--accent)}
-nav{display:flex;gap:20px;flex-wrap:wrap}
-nav a{color:var(--text);text-decoration:none}
+.logo{
+  font-size:26px;font-weight:800;letter-spacing:-0.5px;
+  background:linear-gradient(135deg,var(--accent),var(--blue));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+nav{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+nav a{
+  color:var(--text);text-decoration:none;font-weight:500;
+  position:relative;padding:4px 0;
+}
 nav a:hover{color:var(--accent)}
-.hero{
-  min-height:85vh;
-  display:flex;align-items:center;
-  padding:60px 8%;
-  background:
-    linear-gradient(90deg,#080b12 30%,transparent),
-    url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1400&q=80')
-    center/cover;
+nav a::after{
+  content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;
+  background:var(--accent);transition:width .3s;
 }
-.hero-content{max-width:650px}
-.hero h1{font-size:clamp(35px,6vw,65px);margin-bottom:20px}
-.hero h1 span{color:var(--accent)}
-.hero p{color:var(--muted);font-size:18px;line-height:1.7}
-.btn{
-  display:inline-block;margin-top:25px;
-  padding:13px 22px;border-radius:8px;
-  background:var(--accent);color:#06110c;
-  text-decoration:none;font-weight:bold;
+nav a:hover::after{width:100%}
+.auth-btns{display:flex;gap:10px}
+.auth-btn{
+  padding:10px 18px;border-radius:10px;
+  background:linear-gradient(135deg,var(--accent),#00c97a);
+  color:#04150e;font-weight:700;font-size:14px;
   border:none;cursor:pointer;
+  box-shadow:0 0 20px var(--accent-glow);
+  transition:all .25s;
 }
-.btn:hover{opacity:.85}
+.auth-btn:hover{transform:translateY(-2px);box-shadow:0 0 30px var(--accent-glow)}
+.auth-btn.outline{
+  background:transparent;border:2px solid var(--accent);color:var(--accent);
+  box-shadow:none;
+}
+.auth-btn.outline:hover{background:var(--accent);color:#04150e}
+.user-menu{position:relative;display:flex;align-items:center}
+.user-btn{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border);
+  border-radius:12px;padding:8px 14px;
+  color:var(--text);cursor:pointer;font-size:14px;
+  transition:all .2s;
+}
+.user-btn:hover{border-color:var(--accent);background:rgba(0,245,160,0.08)}
+.user-avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--blue));
+  color:#04150e;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:14px;
+}
+.dropdown{
+  display:none;position:absolute;top:100%;right:0;margin-top:10px;
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:14px;min-width:240px;
+  box-shadow:0 20px 50px rgba(0,0,0,.5);
+  z-index:150;overflow:hidden;
+  backdrop-filter:blur(12px);
+}
+.dropdown.active{display:block}
+.dropdown a, .dropdown button{
+  display:block;width:100%;text-align:left;padding:13px 18px;
+  background:none;border:none;color:var(--text);
+  text-decoration:none;font-size:14px;cursor:pointer;
+  transition:background .2s;
+}
+.dropdown a:hover, .dropdown button:hover{
+  background:rgba(0,245,160,0.1);color:var(--accent);
+}
+.dropdown .user-email{
+  padding:14px 18px;color:var(--muted);font-size:13px;
+  border-bottom:1px solid var(--border);word-break:break-all;
+}
+.dropdown .section-title-menu{
+  padding:10px 18px 6px;font-size:11px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:1px;font-weight:600;
+}
+.hero{
+  min-height:90vh;
+  display:flex;align-items:center;
+  padding:80px 6%;
+  background:
+    linear-gradient(105deg,rgba(5,7,13,0.92) 0%,rgba(5,7,13,0.6) 50%,transparent 100%),
+    url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1600&q=80')
+    center/cover;
+  position:relative;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 50%,rgba(0,245,160,0.15),transparent 50%);
+  pointer-events:none;
+}
+.hero-content{animation:fadeUp 1s ease-out both}
+.hero h1{animation:fadeUp 1s ease-out 0.2s both}
+.hero p{animation:fadeUp 1s ease-out 0.4s both}
+.btn, .channel-btn{animation:fadeUp 1s ease-out 0.6s both}
+.card{animation:fadeUp 0.8s ease-out both}
+.card:nth-child(2){animation-delay:0.1s}
+.card:nth-child(3){animation-delay:0.2s}
+.card:nth-child(4){animation-delay:0.3s}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.logo{animation:glowPulse 3s ease-in-out infinite}
+@keyframes glowPulse{
+  0%,100%{filter:drop-shadow(0 0 6px rgba(0,245,160,0.4))}
+  50%{filter:drop-shadow(0 0 18px rgba(0,245,160,0.8))}
+}
+.hero .tag{
+  display:inline-block;background:rgba(0,245,160,0.15);
+  border:1px solid rgba(0,245,160,0.3);color:var(--accent);
+  padding:6px 14px;border-radius:999px;font-size:12px;
+  font-weight:700;letter-spacing:1px;margin-bottom:18px;
+}
+.hero h1{
+  font-size:clamp(42px,7vw,78px);
+  font-weight:800;line-height:1.05;margin-bottom:18px;
+  letter-spacing:-1px;
+}
+.hero h1 span{
+  background:linear-gradient(135deg,var(--accent),var(--blue));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero p{color:var(--muted);font-size:18px;line-height:1.7;max-width:520px}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:28px;padding:14px 26px;border-radius:12px;
+  background:linear-gradient(135deg,var(--accent),#00d98a);
+  color:#04150e;text-decoration:none;font-weight:700;
+  border:none;cursor:pointer;font-size:15px;
+  box-shadow:0 0 25px var(--accent-glow);
+  transition:all .25s;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 0 40px var(--accent-glow)}
 .channel-btn{
-  background:transparent;
-  border:2px solid var(--accent);
-  color:var(--accent);
-  margin-left:12px;
+  background:transparent;border:2px solid var(--accent);
+  color:var(--accent);margin-left:12px;box-shadow:none;
 }
-.channel-btn:hover{
-  background:var(--accent);
-  color:#06110c;
+.channel-btn:hover{background:var(--accent);color:#04150e}
+section{padding:90px 6%}
+.section-title{
+  font-size:36px;font-weight:800;margin-bottom:10px;
+  letter-spacing:-0.5px;
 }
-section{padding:75px 8%}
-.section-title{font-size:30px;margin-bottom:12px}
-.section-sub{color:var(--muted);margin-bottom:30px}
+.section-sub{color:var(--muted);margin-bottom:36px;font-size:17px}
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:22px;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:24px;
 }
 .card{
-  background:var(--panel);
-  border:1px solid #243244;
-  border-radius:14px;overflow:hidden;
-  transition:.3s;
+  background:rgba(15,23,42,0.7);
+  border:1px solid var(--border);
+  border-radius:18px;overflow:hidden;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  backdrop-filter:blur(8px);
 }
-.card:hover{transform:translateY(-5px);border-color:var(--accent)}
-.card img{
-  width:100%;height:190px;object-fit:cover;
+.card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(0,245,160,0.4);
+  box-shadow:0 20px 40px rgba(0,0,0,.4),0 0 30px rgba(0,245,160,0.15);
 }
-.card-content{padding:20px}
-.card h3{margin-bottom:12px}
-.card p{color:var(--muted);line-height:1.6}
+.card img{width:100%;height:200px;object-fit:cover}
+.card-content{padding:22px}
+.card h3{margin-bottom:10px;font-size:18px;font-weight:700}
+.card p{color:var(--muted);line-height:1.6;font-size:15px}
 .tag{
-  color:var(--accent);font-size:12px;
-  font-weight:bold;margin-bottom:10px;
+  color:var(--accent);font-size:12px;font-weight:700;
+  margin-bottom:10px;letter-spacing:0.5px;
 }
 .read-more{
-  display:inline-block;
-  margin-top:15px;
-  padding:8px 14px;
-  border:none;
-  border-radius:6px;
-  background:transparent;
-  color:var(--accent);
-  font-weight:bold;
-  cursor:pointer;
-  font-size:14px;
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:16px;padding:9px 16px;border:none;
+  border-radius:8px;background:transparent;color:var(--accent);
+  font-weight:700;cursor:pointer;font-size:14px;
+  transition:all .2s;
 }
-.read-more:hover{
-  background:var(--accent);
-  color:#06110c;
-}
+.read-more:hover{background:var(--accent);color:#04150e}
 .article{
-  display:none;
-  max-width:850px;
-  margin:0 auto;
+  display:none;max-width:860px;margin:0 auto;
 }
 .article.active{display:block}
 .article img{
-  width:100%;height:320px;object-fit:cover;
-  border-radius:14px;margin-bottom:25px;
+  width:100%;height:380px;object-fit:cover;
+  border-radius:18px;margin-bottom:28px;
 }
-.article h2{font-size:30px;margin-bottom:15px}
-.article h3{margin:25px 0 10px;color:var(--accent)}
-.article p{color:var(--muted);line-height:1.8;margin-bottom:15px}
-.article ul{margin:0 0 20px 20px;color:var(--muted);line-height:1.8}
+.article h2{font-size:34px;margin-bottom:16px;font-weight:800}
+.article h3{margin:28px 0 12px;color:var(--accent);font-size:22px}
+.article p{color:var(--muted);line-height:1.85;margin-bottom:16px;font-size:16px}
+.article ul{margin:0 0 22px 22px;color:var(--muted);line-height:1.8}
 .back-btn{
-  margin-top:30px;
-  background:transparent;
-  border:2px solid var(--accent);
-  color:var(--accent);
+  margin-top:32px;background:transparent;
+  border:2px solid var(--accent);color:var(--accent);
 }
-.back-btn:hover{background:var(--accent);color:#06110c}
+.back-btn:hover{background:var(--accent);color:#04150e}
+.modal{
+  display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,.75);z-index:200;
+  justify-content:center;align-items:center;
+  backdrop-filter:blur(6px);
+}
+.modal.active{display:flex}
+.modal-content{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:18px;padding:32px;width:90%;max-width:440px;
+  position:relative;box-shadow:0 25px 50px rgba(0,0,0,.5);
+}
+.modal-close{
+  position:absolute;top:16px;right:16px;
+  background:none;border:none;color:var(--muted);
+  font-size:26px;cursor:pointer;
+}
+.tabs{display:flex;gap:8px;margin-bottom:22px}
+.tab{
+  flex:1;padding:11px;text-align:center;
+  background:transparent;border:1px solid var(--border);
+  color:var(--text);border-radius:10px;cursor:pointer;font-weight:600;
+}
+.tab.active{
+  background:linear-gradient(135deg,var(--accent),#00d98a);
+  color:#04150e;border-color:transparent;
+}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;margin-bottom:7px;color:var(--muted);font-size:14px;font-weight:500}
+.form-group input, .form-group textarea{
+  width:100%;padding:13px 14px;border-radius:10px;
+  border:1px solid var(--border);background:#0a0f1a;
+  color:var(--text);font-size:15px;transition:border .2s;
+}
+.form-group input:focus, .form-group textarea:focus{
+  outline:none;border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(0,245,160,0.15);
+}
+.form-group textarea{min-height:110px;resize:vertical}
+.error{color:#f87171;font-size:13px;margin-top:6px}
+.success{color:var(--accent);font-size:13px;margin-top:6px}
+.contact-form{
+  max-width:640px;margin:0 auto;
+  background:rgba(15,23,42,0.6);
+  border:1px solid var(--border);
+  border-radius:18px;padding:36px;
+  backdrop-filter:blur(10px);
+}
 footer{
-  text-align:center;padding:35px 8%;
-  border-top:1px solid #1e293b;
-  color:var(--muted);
+  text-align:center;padding:50px 6%;
+  border-top:1px solid var(--border);
+  color:var(--muted);background:rgba(0,0,0,0.3);
 }
-footer span{color:var(--accent)}
-@media(max-width:600px){
-  header{justify-content:center}
-  nav{justify-content:center}
-  .hero{min-height:65vh}
-  section{padding:55px 6%}
-  .channel-btn{margin-left:0;margin-top:12px}
-  .article img{height:220px}
+footer span{color:var(--accent);font-weight:700}
+@media(max-width:700px){
+  header{justify-content:center;padding:14px 4%}
+  nav{justify-content:center;gap:14px}
+  .hero{min-height:75vh;padding:60px 5%}
+  section{padding:60px 5%}
+  .channel-btn{margin-left:0;margin-top:14px}
+  .article img{height:240px}
+  .auth-btns{flex-direction:column;width:100%}
+  .grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
+<canvas id="bg-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;"></canvas>
+
 <header>
   <div class="logo">GEN7PLAY</div>
+
   <nav>
     <a href="#home">Accueil</a>
     <a href="#blog">Blog</a>
+    <a href="#contact">Contact</a>
     <a href="https://whatsapp.com/channel/0029Vb99MNz2f3EPTXFQU411" target="_blank">Chaîne WhatsApp</a>
+
+    <div class="auth-btns" id="authBtns">
+      <button class="auth-btn" id="loginBtn">Connexion</button>
+      <button class="auth-btn outline" id="signupBtn">Inscription</button>
+    </div>
+
+    <div class="user-menu" id="userMenu" style="display:none">
+      <button class="user-btn" id="userBtn">
+        <div class="user-avatar" id="userAvatar">U</div>
+        <span id="userName">Utilisateur</span>
+        <span style="font-size:12px">▼</span>
+      </button>
+
+      <div class="dropdown" id="userDropdown">
+        <div class="user-email" id="userEmailDisplay"></div>
+
+        <div class="section-title-menu">Navigation</div>
+        <a href="#home">Accueil</a>
+        <a href="#blog">Blog</a>
+        <a href="#contact">Contact</a>
+        <a href="https://whatsapp.com/channel/0029Vb99MNz2f3EPTXFQU411" target="_blank">Chaîne WhatsApp</a>
+
+        <div class="section-title-menu">Compte</div>
+        <button id="settingsBtn">Paramètres</button>
+        <button id="logoutBtn">Déconnexion</button>
+      </div>
+    </div>
   </nav>
 </header>
 
@@ -360,22 +546,16 @@ footer span{color:var(--accent)}
     <div class="tag">GAMING</div>
     <h2>5 conseils pour progresser rapidement en gaming</h2>
     <p>Progresser dans les jeux ne dépend pas seulement de la chance. Avec une bonne méthode, tu peux améliorer ta visée, tes réflexes, ta prise de décision et ta régularité.</p>
-
     <h3>1. Entraîne-toi avec un objectif</h3>
     <p>Ne joue pas seulement pour jouer. À chaque session, choisis un objectif précis : améliorer ta visée, mieux te déplacer, apprendre une carte ou réduire tes erreurs.</p>
-
-    <h3>2. Travaille une compétence à la fois</h3>
-    <p>Concentre-toi sur une seule chose pendant 10 à 20 minutes : visée rapide, suivi de cible, changement d’arme ou placement. Entraîner plusieurs compétences en même temps rend les progrès plus difficiles à mesurer.</p>
-
-    <h3>3. Ajuste ta sensibilité</h3>
-    <p>Une sensibilité trop élevée peut rendre tes mouvements instables. Commence avec une sensibilité plus basse, puis augmente-la progressivement jusqu’à trouver un réglage confortable.</p>
-
-    <h3>4. Analyse tes défaites</h3>
-    <p>Après une partie difficile, demande-toi : ai-je mal positionné mon personnage, ai-je pris un mauvais combat ou ai-je manqué une information importante ? Les erreurs répétées sont les meilleures leçons.</p>
-
-    <h3>5. Repose-toi</h3>
-    <p>Jouer fatigué réduit ta concentration et tes réflexes. Fais des pauses régulières, hydrate-toi et arrête une session quand tu sens que ta précision baisse.</p>
-
+    <h3>2. Analyse tes défaites</h3>
+    <p>Après une partie difficile, demande-toi ce que tu aurais pu faire autrement. Une mauvaise position, une précipitation ou un mauvais choix d’arme peuvent souvent être corrigés.</p>
+    <h3>3. Maîtrise peu de choses à la fois</h3>
+    <p>Il vaut mieux devenir très bon avec deux ou trois armes, personnages ou stratégies que d’essayer de tout maîtriser en même temps.</p>
+    <h3>4. Joue avec régularité</h3>
+    <p>Des sessions courtes mais régulières sont souvent plus efficaces que de longues sessions sans concentration. Ton cerveau apprend mieux avec la répétition.</p>
+    <h3>5. Reste calme</h3>
+    <p>La frustration fait prendre de mauvaises décisions. Fais une pause après plusieurs défaites, puis reviens avec un objectif clair.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
@@ -383,314 +563,205 @@ footer span{color:var(--accent)}
     <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" alt="Android gaming">
     <div class="tag">TECH</div>
     <h2>Optimise ton Android pour le gaming</h2>
-    <p>Un téléphone Android peut offrir une meilleure expérience de jeu avec quelques réglages simples. L’objectif est de réduire la chaleur, les ralentissements et les interruptions.</p>
-
-    <h3>1. Ferme les applications inutiles</h3>
-    <p>Avant de lancer un jeu, ferme les applications que tu n’utilises pas. Cela peut libérer de la mémoire et réduire les applications qui consomment des ressources en arrière-plan.</p>
-
-    <h3>2. Désactive le mode économie d’énergie</h3>
-    <p>Le mode économie d’énergie peut limiter les performances du téléphone pour préserver la batterie. Pour les jeux compétitifs, désactive-le avant de jouer afin que l’appareil puisse fonctionner à pleine capacité.</p>
-
-    <h3>3. Utilise une connexion stable</h3>
-    <p>Le Wi‑Fi est souvent plus stable qu’un réseau mobile faible. Rapproche-toi du routeur, évite les téléchargements pendant que tu joues et limite les autres appareils qui utilisent beaucoup Internet.</p>
-
-    <h3>4. Évite de jouer pendant la charge</h3>
-    <p>Jouer pendant que le téléphone charge peut augmenter la chaleur. La chaleur peut provoquer une baisse de performance. Si possible, charge ton téléphone avant ou après la session.</p>
-
-    <h3>5. Baisse les graphismes si nécessaire</h3>
-    <p>Si ton jeu lag, réduis les ombres, les effets visuels et la résolution. Un framerate plus stable est souvent plus utile qu’un graphisme très élevé.</p>
-
+    <p>Un téléphone Android peut devenir plus fluide pour les jeux si tu réduis les applications inutiles, la surchauffe et la consommation en arrière-plan.</p>
+    <h3>Ferme les applications inutiles</h3>
+    <p>Avant de jouer, ferme les applications lourdes comme les réseaux sociaux, les navigateurs avec beaucoup d’onglets et les applications de téléchargement.</p>
+    <h3>Active le mode jeu</h3>
+    <p>Beaucoup de téléphones proposent un mode jeu ou une optimisation des performances. Il peut réduire les notifications et donner la priorité au jeu.</p>
+    <h3>Libère de l’espace</h3>
+    <p>Garde au moins quelques gigaoctets libres. Un téléphone trop rempli peut ralentir, chauffer davantage et avoir du mal à charger les ressources du jeu.</p>
+    <h3>Évite de jouer en chargeant</h3>
+    <p>Jouer pendant la charge peut faire monter la température. La surchauffe réduit souvent les performances et peut affecter la batterie à long terme.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article3">
-    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80" alt="Cybersécurité">
+    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80" alt="Sécurité">
     <div class="tag">SÉCURITÉ</div>
     <h2>Protège tes comptes de jeu et tes données</h2>
-    <p>Ton compte de jeu, tes messages et tes informations personnelles ont de la valeur. Quelques habitudes simples peuvent réduire fortement le risque de piratage.</p>
-
-    <h3>1. Utilise un mot de passe unique</h3>
-    <p>Ne réutilise pas le même mot de passe pour ton email, tes réseaux sociaux et tes jeux. Si un site est piraté, tes autres comptes restent protégés.</p>
-
-    <h3>2. Active la vérification en deux étapes</h3>
-    <p>Active la double authentification sur ton email, WhatsApp, Google, Facebook et tes plateformes de jeu. Même si quelqu’un obtient ton mot de passe, il aura encore besoin d’un code supplémentaire.</p>
-
-    <h3>3. Méfie-toi des liens étranges</h3>
-    <p>Ne clique pas sur les liens qui promettent des skins gratuits, des diamants, de l’argent facile ou des concours non officiels. Vérifie toujours l’adresse du site avant d’entrer tes informations.</p>
-
-    <h3>4. Ne partage jamais ton code de vérification</h3>
-    <p>Aucun administrateur, support technique ou ami sérieux ne devrait te demander ton code OTP, ton mot de passe ou l’accès à ton téléphone.</p>
-
-    <h3>5. Mets à jour ton téléphone</h3>
-    <p>Les mises à jour Android corrigent souvent des failles de sécurité. Installe-les lorsque ton téléphone te le propose, de préférence avec une connexion Wi‑Fi stable.</p>
-
+    <p>Ton compte de jeu peut contenir des années de progression, des achats et des informations personnelles. Le protéger doit être une priorité.</p>
+    <h3>Utilise un mot de passe unique</h3>
+    <p>Ne réutilise jamais le même mot de passe sur plusieurs sites. Si un site est piraté, tes autres comptes restent protégés.</p>
+    <h3>Active la double authentification</h3>
+    <p>La double authentification ajoute une étape de vérification lors de la connexion. Même si quelqu’un connaît ton mot de passe, il ne pourra pas entrer facilement.</p>
+    <h3>Ne partage jamais ton code</h3>
+    <p>Aucun administrateur, support officiel ou créateur de contenu ne devrait te demander ton mot de passe ou un code de vérification.</p>
+    <h3>Méfie-toi des liens étranges</h3>
+    <p>Ne clique pas sur les liens reçus par message, commentaire ou groupe si tu ne connais pas la source. Vérifie toujours l’adresse officielle du site.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article4">
-    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80" alt="Free Fire Battle Royale">
+    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80" alt="Battle Royale">
     <div class="tag">FREE FIRE</div>
     <h2>10 conseils pour survivre plus longtemps en Battle Royale</h2>
-    <p>Free Fire est un jeu de Battle Royale où l’objectif est d’être la dernière équipe ou le dernier joueur en vie. La survie dépend autant de ta stratégie que de tes réflexes.</p>
-
-    <h3>1. Choisis une zone d’atterrissage adaptée</h3>
-    <p>Si tu débutes, évite les zones très fréquentées. Atterris près d’un endroit avec des armes, des gilets et des soins, puis progresse vers le centre de la carte.</p>
-
-    <h3>2. Récupère vite ton équipement</h3>
-    <p>Priorise une arme principale, des munitions, un gilet, un casque, des soins et des grenades. Ne perds pas trop de temps à chercher des objets rares au début.</p>
-
-    <h3>3. Écoute les bruits</h3>
-    <p>Les pas, les tirs et les véhicules donnent des informations importantes. Baisse le volume de la musique et augmente celui des effets si ton téléphone le permet.</p>
-
-    <h3>4. Reste près des couvertures</h3>
-    <p>Évite de courir au milieu des zones ouvertes. Utilise les murs, les rochers, les arbres et les bâtiments pour te protéger.</p>
-
-    <h3>5. Ne poursuis pas chaque ennemi</h3>
-    <p>Après un combat, recharge, soigne-toi et observe les alentours. Poursuivre un adversaire peut t’exposer à son équipe.</p>
-
-    <h3>6. Gère la zone</h3>
-    <p>Regarde régulièrement la minimap et prépare ton déplacement avant que la zone ne se réduise. Arriver en retard te met souvent en danger.</p>
-
-    <h3>7. Utilise les grenades intelligemment</h3>
-    <p>Les grenades peuvent forcer un ennemi à sortir de sa couverture. Ne les gaspille pas, mais garde-en pour les situations difficiles.</p>
-
-    <h3>8. Joue avec ton équipe</h3>
-    <p>En squad, ne partez pas chacun de son côté. Restez proches, partagez les ressources et annoncez les ennemis que vous repérez.</p>
-
-    <h3>9. Apprends la carte</h3>
-    <p>Mémorise les zones avec beaucoup de butins, les routes rapides et les endroits où se cacher. Plus tu connais la carte, meilleures seront tes décisions.</p>
-
-    <h3>10. Reste calme sous pression</h3>
-    <p>Quand plusieurs ennemis t’attaquent, ne panique pas. Déplace-toi, utilise une couverture et cherche une sortie plutôt que de tirer sans réfléchir.</p>
-
+    <p>Survivre en Battle Royale demande de la patience, une bonne lecture de la zone et des décisions intelligentes.</p>
+    <h3>Choisis un bon atterrissage</h3>
+    <p>Si tu veux progresser régulièrement, atterris dans des zones moins fréquentées. Tu auras plus de temps pour trouver du loot sans combat immédiat.</p>
+    <h3>Loot rapidement</h3>
+    <p>Trouve vite une arme, un gilet, un casque et des munitions. Ne reste pas trop longtemps au même endroit après avoir récupéré l’essentiel.</p>
+    <h3>Suis la zone</h3>
+    <p>Ne attends pas la dernière seconde pour bouger. Se déplacer tôt te permet de choisir une meilleure position.</p>
+    <h3>Écoute les bruits</h3>
+    <p>Les pas, les tirs et les véhicules donnent des informations importantes. Utilise un casque si possible.</p>
+    <h3>Évite les combats inutiles</h3>
+    <p>Tuer n’est pas toujours la meilleure décision. Parfois, rester discret et atteindre le top 5 est plus rentable.</p>
+    <h3>Utilise le terrain</h3>
+    <p>Les rochers, murs, arbres et bâtiments peuvent te protéger. Ne cours pas en ligne droite en terrain ouvert.</p>
+    <h3>Garde des soins</h3>
+    <p>Ne dépense pas tous tes soins trop vite. Garde toujours de quoi te soigner en fin de partie.</p>
+    <h3>Joue avec ton équipe</h3>
+    <p>En squad, reste proche de tes coéquipiers. Un joueur isolé est beaucoup plus facile à éliminer.</p>
+    <h3>Observe avant d’attaquer</h3>
+    <p>Regarde la position des ennemis, leur nombre et leur couverture avant de tirer.</p>
+    <h3>Garde ton calme en final</h3>
+    <p>Dans les dernières zones, la patience gagne souvent contre l’agressivité. Laisse les autres équipes se combattre quand c’est possible.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article5">
-    <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=1200&q=80" alt="Clash Squad Free Fire">
+    <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=1200&q=80" alt="Clash Squad">
     <div class="tag">FREE FIRE</div>
     <h2>Clash Squad : comment gagner plus de rounds</h2>
-    <p>Le Clash Squad est un mode rapide où la coordination et les bons achats font souvent la différence. Chaque round compte, donc évite de jouer seul sans plan.</p>
-
-    <h3>1. Communique dès le début</h3>
-    <p>Annonce ta position, les ennemis repérés et l’arme que tu vas acheter. Une équipe qui communique gagne souvent contre une équipe plus forte mais désorganisée.</p>
-
-    <h3>2. Achète selon le round</h3>
-    <p>Au premier round, privilégie une arme fiable et des protections. Plus tard, investis dans des armes adaptées à la map et à ton rôle.</p>
-
-    <h3>3. Ne dépense pas tout inutilement</h3>
-    <p>Garde assez d’argent pour les rounds suivants. Acheter trop d’objets peut te laisser sans armure ou sans soins au moment décisif.</p>
-
-    <h3>4. Contrôle les zones importantes</h3>
-    <p>Occupe les angles, les escaliers et les passages stratégiques. Ne reste pas immobile au même endroit trop longtemps.</p>
-
-    <h3>5. Joue en duo ou en trio</h3>
-    <p>Avancez ensemble pour pouvoir vous soutenir. Si un joueur est touché, les autres peuvent le couvrir ou le soigner.</p>
-
-    <h3>6. Change de position après un kill</h3>
-    <p>Après avoir éliminé un adversaire, déplace-toi. Les ennemis connaissent souvent ta position grâce aux tirs ou aux indications de la minimap.</p>
-
-    <h3>7. Adapte-toi à l’ennemi</h3>
-    <p>Si l’adversaire joue très agressif, garde tes distances et utilise des couvertures. S’il campe, utilise les grenades et les angles pour le déloger.</p>
-
-    <h3>8. Garde ton calme</h3>
-    <p>Un round perdu n’est pas la fin du match. Analyse l’erreur, ajuste ta stratégie et reste concentré pour le round suivant.</p>
-
+    <p>Clash Squad récompense la coordination, la gestion économique et les bonnes positions plus que la chance.</p>
+    <h3>Communique avec ton équipe</h3>
+    <p>Indique où sont les ennemis, combien ils sont et quelle zone ils contrôlent. Une bonne information peut changer le résultat d’un round.</p>
+    <h3>Gère ton argent</h3>
+    <p>N’achète pas tout au premier round. Garde parfois de l’argent pour un gilet, un casque ou une meilleure arme au round suivant.</p>
+    <h3>Contrôle les angles</h3>
+    <p>Ne traverse pas une zone ouverte sans vérifier les angles. Avance avec ton équipe et utilise les murs comme protection.</p>
+    <h3>Joue ensemble</h3>
+    <p>Un joueur qui attaque seul est facile à éliminer. Avancez en groupe, mais sans être trop serrés pour éviter les grenades.</p>
+    <h3>Adapte tes armes</h3>
+    <p>Choisis une arme selon la distance du combat. Une arme polyvalente est souvent un bon choix si tu ne connais pas encore la map.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article6">
-    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80" alt="Sensibilité Free Fire">
+    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80" alt="Sensibilité">
     <div class="tag">FREE FIRE</div>
     <h2>Comment trouver ta meilleure sensibilité dans Free Fire</h2>
-    <p>Il n’existe pas une sensibilité parfaite pour tous les joueurs. La meilleure configuration est celle qui te permet de viser avec précision sans perdre le contrôle.</p>
-
-    <h3>1. Commence avec une sensibilité moyenne</h3>
-    <p>Ne copie pas aveuglément la sensibilité d’un pro. Commence avec des réglages moyens, puis ajuste-les selon ton téléphone et ton style de jeu.</p>
-
-    <h3>2. Teste en entraînement</h3>
-    <p>Va dans le mode entraînement et teste les tirs à courte, moyenne et longue distance. Ajuste la sensibilité jusqu’à ce que tes mouvements soient fluides.</p>
-
-    <h3>3. Ajuste la visée générale</h3>
-    <p>Si ton viseur bouge trop vite, baisse la sensibilité. Si tu as du mal à suivre un ennemi, augmente-la légèrement.</p>
-
-    <h3>4. Travaille la sensibilité du viseur rouge</h3>
-    <p>Ce réglage influence beaucoup les combats rapprochés. Teste-le avec des tirs rapides et des mouvements latéraux.</p>
-
-    <h3>5. Ne change pas tout chaque jour</h3>
-    <p>Modifie un réglage à la fois. Si tu changes plusieurs paramètres en même temps, tu ne sauras pas lequel t’a aidé ou pénalisé.</p>
-
-    <h3>6. Adapte selon ton appareil</h3>
-    <p>La taille de l’écran, la latence tactile et la performance du téléphone influencent tes sensations. Ce qui marche sur un téléphone peut ne pas convenir à un autre.</p>
-
-    <h3>7. Entraîne-toi régulièrement</h3>
-    <p>La sensibilité ne remplace pas l’entraînement. Joue quelques minutes chaque jour pour améliorer ta précision et tes réflexes.</p>
-
+    <p>La meilleure sensibilité n’est pas la même pour tout le monde. Elle dépend de ton téléphone, de ta taille d’écran et de ton style de jeu.</p>
+    <h3>Commence par des réglages moyens</h3>
+    <p>Ne copie pas directement la sensibilité d’un autre joueur. Commence avec des valeurs moyennes, puis ajuste progressivement.</p>
+    <h3>Teste en entraînement</h3>
+    <p>Va dans la salle d’entraînement et teste les mouvements de visée, les tirs à distance et les déplacements rapides.</p>
+    <h3>Ajuste la visée générale</h3>
+    <p>Si ton viseur bouge trop vite, baisse légèrement la sensibilité. Si tu as du mal à suivre un ennemi, augmente-la un peu.</p>
+    <h3>Teste la visée en tirant</h3>
+    <p>Tire sur une cible éloignée et observe si ton réticule monte trop. Ajuste jusqu’à ce que tes tirs restent plus stables.</p>
+    <h3>Ne change pas tout chaque jour</h3>
+    <p>Donne-toi quelques jours avec les mêmes réglages. Changer sans arrêt empêche ton cerveau de s’habituer.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article7">
-    <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1200&q=80" alt="Armes Free Fire">
+    <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1200&q=80" alt="Armes">
     <div class="tag">FREE FIRE</div>
     <h2>Les meilleures armes selon ton style de jeu</h2>
-    <p>Le choix de l’arme dépend de la map, de la distance et de ton style. Il n’y a pas une seule « meilleure arme » : l’important est de choisir celle qui correspond à ta façon de jouer.</p>
-
+    <p>Il n’existe pas une seule « meilleure arme ». Le bon choix dépend de ta distance de combat, de ta précision et de ta façon d’avancer.</p>
     <h3>Pour le combat rapproché</h3>
-    <p>Les armes à cadence élevée sont utiles dans les bâtiments et les zones serrées. Elles permettent de faire mal rapidement, mais demandent un bon contrôle du recul.</p>
-
+    <p>Les fusils à pompe et les SMG sont efficaces dans les bâtiments et les espaces réduits. Ils demandent une bonne position et de la réactivité.</p>
     <h3>Pour la moyenne distance</h3>
-    <p>Les fusils d’assaut sont polyvalents. Ils conviennent aux joueurs qui veulent combattre à différentes distances sans changer souvent d’arme.</p>
-
+    <p>Les fusils d’assaut sont souvent polyvalents. Ils permettent de combattre à moyenne distance tout en restant utiles dans les échanges rapides.</p>
     <h3>Pour la longue distance</h3>
-    <p>Les fusils de précision sont efficaces si tu sais te positionner, viser calmement et changer de position après un tir.</p>
-
-    <h3>Pour soutenir l’équipe</h3>
-    <p>Les armes avec un grand chargeur peuvent être utiles pour couvrir un coéquipier ou contrôler une zone. Elles demandent cependant de la précision.</p>
-
-    <h3>Conseil important</h3>
-    <p>Maîtrise deux ou trois armes plutôt que d’en essayer une nouvelle à chaque partie. La régularité améliore plus vite tes résultats.</p>
-
+    <p>Les fusils de précision peuvent être très forts, mais ils demandent une bonne position, de la patience et une excellente visée.</p>
+    <h3>Choisis selon ta map</h3>
+    <p>Dans une zone avec beaucoup de bâtiments, privilégie une arme rapide. Dans une zone ouverte, une arme plus précise peut être meilleure.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article8">
-    <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1200&q=80" alt="Dream League Soccer équipe">
+    <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1200&q=80" alt="Dream League Soccer">
     <div class="tag">DLS</div>
     <h2>DLS : construire une équipe équilibrée sans dépenser trop</h2>
-    <p>Dans Dream League Soccer, une équipe chère n’est pas automatiquement la meilleure. Une équipe équilibrée, avec de bons joueurs à chaque poste, est souvent plus efficace.</p>
-
-    <h3>1. Commence par la défense</h3>
-    <p>Un bon gardien et des défenseurs rapides réduisent les buts encaissés. Ne dépense pas tout ton budget sur les attaquants.</p>
-
-    <h3>2. Choisis un milieu polyvalent</h3>
-    <p>Un milieu capable de défendre, passer et récupérer le ballon rend l’équipe plus stable. Il t’aide aussi à lancer les contre-attaques.</p>
-
-    <h3>3. Ne mets pas tous les attaquants rapides</h3>
-    <p>La vitesse est utile, mais il faut aussi des joueurs capables de garder le ballon, passer et finir les occasions.</p>
-
-    <h3>4. Améliore progressivement</h3>
-    <p>Ne cherche pas à acheter tous les meilleurs joueurs d’un coup. Améliore un poste faible à la fois, en gardant une réserve pour les transferts.</p>
-
-    <h3>5. Utilise les scouts et les agents</h3>
-    <p>DLS permet de recruter des agents et des scouts pour identifier des talents sur le marché des transferts.</p>
-
-    <h3>6. Adapte la formation à tes joueurs</h3>
-    <p>Si tes ailiers sont rapides, une formation avec des ailes peut être efficace. Si ton milieu est fort, privilégie une formation qui le met en valeur.</p>
-
+    <p>Une bonne équipe dans Dream League Soccer ne dépend pas uniquement des joueurs les plus chers. L’équilibre entre défense, milieu et attaque compte beaucoup.</p>
+    <h3>Commence par la défense</h3>
+    <p>Des défenseurs rapides et solides te permettront de concéder moins de buts. Une bonne défense rend les matchs plus faciles.</p>
+    <h3>Choisis un milieu créatif</h3>
+    <p>Un milieu capable de passer, récupérer le ballon et lancer les attaques rend ton équipe plus fluide.</p>
+    <h3>Ne néglige pas les remplaçants</h3>
+    <p>Des remplaçants corrects te permettent de gérer la fatigue et les blessures sans casser la qualité de ton équipe.</p>
+    <h3>Améliore progressivement</h3>
+    <p>Ne dépense pas tout d’un coup. Améliore d’abord les postes qui te posent le plus de problèmes pendant les matchs.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article9">
-    <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80" alt="Marquer au football">
+    <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80" alt="Football mobile">
     <div class="tag">DLS</div>
     <h2>7 astuces pour marquer plus facilement dans DLS</h2>
-    <p>Marquer dans DLS ne dépend pas seulement de la puissance de frappe. Le timing, le placement et le choix du tir sont essentiels.</p>
-
-    <h3>1. Approche du but avant de tirer</h3>
-    <p>Un tir de trop loin a moins de chances d’entrer. Avance jusqu’à une distance plus favorable avant de déclencher ta frappe.</p>
-
-    <h3>2. Utilise les deux pieds</h3>
-    <p>Si ton joueur est droitier mais que le ballon arrive sur son pied gauche, le tir peut être moins précis. Essaie de le ramener sur son bon pied.</p>
-
-    <h3>3. Vise les coins</h3>
-    <p>Les tirs au centre sont plus faciles à arrêter. Vise plutôt les coins du but, surtout quand le gardien est bien placé.</p>
-
-    <h3>4. Ne tire pas toujours fort</h3>
-    <p>Une frappe puissante peut passer au-dessus ou à côté. Parfois, un tir placé et rapide est plus efficace.</p>
-
-    <h3>5. Utilise les passes décisives</h3>
-    <p>Une passe en retrait ou une passe latérale peut créer une meilleure occasion qu’un dribble forcé.</p>
-
-    <h3>6. Surprends le gardien</h3>
-    <p>Change de rythme, fais une feinte ou décale le ballon avant de tirer. Les gardiens réagissent mieux quand ils voient venir l’action.</p>
-
-    <h3>7. Entraîne-toi sur les tirs</h3>
-    <p>Fais des matchs d’entraînement et répète les mêmes situations : centre, une-deux, frappe enroulée et tir à l’entrée de la surface.</p>
-
+    <p>Marquer régulièrement demande du timing, de la patience et une meilleure lecture des espaces.</p>
+    <h3>1. Attends le bon angle</h3>
+    <p>Ne tire pas dès que tu vois le but. Approche-toi, ajuste ton angle et choisis le bon moment.</p>
+    <h3>2. Utilise les passes</h3>
+    <p>Une passe rapide peut créer un espace qu’un dribble seul ne créerait pas.</p>
+    <h3>3. Varie tes frappes</h3>
+    <p>Alterne entre frappes puissantes, frappes placées et tirs après contrôle. Cela rend ton attaque moins prévisible.</p>
+    <h3>4. Exploite les contre-attaques</h3>
+    <p>Quand l’adversaire monte beaucoup, cherche rapidement tes attaquants dans les espaces libres.</p>
+    <h3>5. Surveille le gardien</h3>
+    <p>Observe la position du gardien avant de tirer. Parfois, une petite feinte ou une passe suffit.</p>
+    <h3>6. Joue sur les ailes</h3>
+    <p>Les centres et les débordements peuvent créer de bonnes occasions, surtout si tu as des attaquants rapides.</p>
+    <h3>7. Reste patient</h3>
+    <p>Forcer une frappe depuis une mauvaise position donne souvent le ballon à l’adversaire. Attends une meilleure occasion.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article10">
-    <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=80" alt="Formations football">
+    <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=80" alt="Formation football">
     <div class="tag">DLS</div>
     <h2>Les meilleures formations pour progresser en DLS</h2>
-    <p>Une formation ne gagne pas les matchs seule, mais elle peut mettre tes meilleurs joueurs dans leur meilleure position. Choisis-la selon ton style et la qualité de ton effectif.</p>
-
-    <h3>4-3-3 : pour l’attaque</h3>
-    <p>Cette formation offre de la largeur avec deux ailiers et un avant-centre. Elle est idéale si tu as des joueurs rapides sur les côtés.</p>
-
-    <h3>4-4-2 : pour l’équilibre</h3>
-    <p>C’est une formation simple et solide. Elle convient bien aux joueurs qui veulent défendre correctement tout en gardant des occasions offensives.</p>
-
-    <h3>3-5-2 : pour le milieu</h3>
-    <p>Avec cinq milieux, cette formation peut contrôler le centre du terrain. Elle demande cependant des défenseurs rapides pour couvrir les côtés.</p>
-
-    <h3>4-2-3-1 : pour le contre-attaque</h3>
-    <p>Elle protège la défense avec deux milieux défensifs, tout en laissant un meneur et deux ailiers soutenir l’attaquant.</p>
-
-    <h3>Comment choisir ?</h3>
-    <p>Regarde tes joueurs : si tu as de bons ailiers, choisis une formation avec des ailes. Si ton équipe est forte au milieu, privilégie une formation à trois milieux.</p>
-
+    <p>La meilleure formation dépend de tes joueurs, de ton style et de la façon dont ton adversaire joue.</p>
+    <h3>4-3-3 pour l’attaque</h3>
+    <p>Cette formation offre beaucoup d’options offensives. Elle est utile si tu as des ailiers rapides et un bon milieu de terrain.</p>
+    <h3>4-4-2 pour l’équilibre</h3>
+    <p>C’est une formation simple et solide. Elle convient bien si tu veux défendre proprement tout en gardant des occasions.</p>
+    <h3>3-5-2 pour le contrôle</h3>
+    <p>Cette formation peut dominer le milieu, mais elle demande des défenseurs fiables et une bonne gestion des espaces.</p>
+    <h3>Adapte-toi pendant le match</h3>
+    <p>Si tu mènes, tu peux renforcer ta défense. Si tu perds, augmente ta pression et cherche plus de solutions offensives.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article11">
-    <img src="https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1200&q=80" alt="eFootball gameplay">
+    <img src="https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1200&q=80" alt="eFootball">
     <div class="tag">EFOOTBALL</div>
     <h2>eFootball : 8 conseils pour mieux contrôler le ballon</h2>
-    <p>Dans eFootball, le contrôle du ballon est plus important que les dribbles spectaculaires. Un joueur calme et précis peut dominer un adversaire plus agressif.</p>
-
-    <h3>1. Ralentis après la récupération</h3>
-    <p>Quand tu récupères le ballon, ne fonce pas immédiatement. Regarde les options de passe et cherche un espace.</p>
-
-    <h3>2. Utilise des passes courtes</h3>
-    <p>Les passes courtes réduisent les pertes de balle. Elles permettent aussi de faire avancer l’équipe progressivement.</p>
-
-    <h3>3. Protège le ballon</h3>
-    <p>Quand un adversaire est proche, utilise le corps et change de direction pour le protéger. Ne dribble pas toujours dans la même direction.</p>
-
-    <h3>4. Anticipe la pression</h3>
-    <p>Si l’adversaire presse fort, joue vite vers un coéquipier libre. Si tu gardes trop le ballon, tu risques de le perdre.</p>
-
-    <h3>5. Utilise les appels de balle</h3>
-    <p>Fais bouger tes coéquipiers pour créer des espaces. Un mouvement sans ballon peut ouvrir une ligne de passe.</p>
-
-    <h3>6. Maîtrise les changements de direction</h3>
-    <p>Les dribbles efficaces ne sont pas toujours rapides. Un petit changement de direction au bon moment peut éliminer un défenseur.</p>
-
-    <h3>7. Soigne tes premières touches</h3>
-    <p>Reçois le ballon avec une orientation qui te permet soit de passer, soit d’avancer. Une mauvaise première touche peut ruiner une attaque.</p>
-
-    <h3>8. Entraîne-toi sur les passes</h3>
-    <p>Les Smart Assist Controls d’eFootball peuvent aider à sélectionner des coéquipiers ouverts selon la situation.</p>
-
+    <p>Le contrôle du ballon est l’une des bases les plus importantes dans eFootball. Il te permet de garder le rythme et de créer des occasions.</p>
+    <h3>1. Ralentis quand il le faut</h3>
+    <p>Tous les attaques ne doivent pas être rapides. Parfois, garder le ballon et attendre une ouverture est plus efficace.</p>
+    <h3>2. Utilise les passes courtes</h3>
+    <p>Les passes courtes réduisent les pertes de balle et permettent de faire avancer l’équipe progressivement.</p>
+    <h3>3. Regarde avant de recevoir</h3>
+    <p>Anticipe la position de tes coéquipiers avant même de recevoir le ballon.</p>
+    <h3>4. Protège le ballon</h3>
+    <p>Utilise ton corps pour protéger le ballon quand un défenseur est proche.</p>
+    <h3>5. Dribble avec intention</h3>
+    <p>Ne dribble pas seulement pour dribbler. Chaque mouvement doit te rapprocher du but ou créer un espace.</p>
+    <h3>6. Change de rythme</h3>
+    <p>Alterne entre accélérations et ralentissements pour déstabiliser la défense adverse.</p>
+    <h3>7. Utilise les ailes</h3>
+    <p>Les ailiers peuvent créer de la largeur et attirer les défenseurs vers l’extérieur.</p>
+    <h3>8. Entraîne-toi régulièrement</h3>
+    <p>Le contrôle s’améliore avec la répétition. Joue quelques matchs d’entraînement pour développer tes réflexes.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article12">
-    <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=1200&q=80" alt="Dream Team eFootball">
+    <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=1200&q=80" alt="Dream Team">
     <div class="tag">EFOOTBALL</div>
     <h2>Comment créer une Dream Team forte dans eFootball</h2>
-    <p>La Dream Team permet de recruter et développer des joueurs pour construire ton équipe. L’objectif n’est pas seulement d’avoir des stars, mais de créer une équipe cohérente.</p>
-
-    <h3>1. Choisis un style clair</h3>
-    <p>Décide si tu veux jouer en possession, en contre-attaque ou avec un pressing agressif. Ensuite, recrute des joueurs adaptés à ce style.</p>
-
-    <h3>2. Ne recrute pas que des attaquants</h3>
-    <p>Un bon gardien, des défenseurs solides et des milieux capables de récupérer le ballon sont essentiels pour gagner régulièrement.</p>
-
-    <h3>3. Développe les bons joueurs</h3>
-    <p>eFootball permet de développer les joueurs à travers les matchs et des objets spéciaux, ou d’utiliser le développement automatique.</p>
-
-    <h3>4. Évite les joueurs trop similaires</h3>
-    <p>Si tous tes milieux sont défensifs, tu manqueras de créativité. Si tous tes attaquants sont rapides, tu auras peut-être du mal à conserver le ballon.</p>
-
-    <h3>5. Adapte la formation</h3>
-    <p>Une formation doit mettre tes meilleurs joueurs dans leur position naturelle. Ne force pas un ailier à jouer défenseur si son style ne convient pas.</p>
-
-    <h3>6. Teste en match</h3>
-    <p>Une équipe peut paraître forte sur le papier, mais ne pas bien fonctionner en jeu. Joue plusieurs matchs avant de modifier profondément ton effectif.</p>
-
+    <p>Une bonne Dream Team n’est pas seulement une équipe avec les meilleurs joueurs. C’est une équipe dont les profils se complètent.</p>
+    <h3>Choisis un style clair</h3>
+    <p>Décide si tu veux jouer en possession, en contre-attaque ou avec une pression élevée. Tes joueurs doivent correspondre à ce style.</p>
+    <h3>Équilibre les postes</h3>
+    <p>Ne mets pas toutes tes ressources dans l’attaque. Une défense faible rendra tes matchs beaucoup plus difficiles.</p>
+    <h3>Regarde les compétences</h3>
+    <p>La vitesse, la passe, le tir, la défense et le physique sont importants selon le poste. Choisis les joueurs selon leur rôle.</p>
+    <h3>Développe intelligemment</h3>
+    <p>Améliore d’abord les joueurs que tu utilises le plus souvent. Ne disperse pas tes ressources sur toute l’équipe.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
@@ -698,89 +769,53 @@ footer span{color:var(--accent)}
     <img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&w=1200&q=80" alt="Défense eFootball">
     <div class="tag">EFOOTBALL</div>
     <h2>eFootball : les bases d’une bonne défense</h2>
-    <p>Une bonne défense ne consiste pas à courir après le ballon. Il faut anticiper, garder sa position et travailler avec ses coéquipiers.</p>
-
-    <h3>1. Ne saute pas trop vite</h3>
-    <p>Si tu attaques le porteur trop tôt, il peut facilement te passer. Attends le bon moment avant de tenter une interception.</p>
-
-    <h3>2. Ferme les espaces centraux</h3>
-    <p>Les passes dans l’axe sont souvent dangereuses. Garde une structure compacte entre ta défense et ton milieu.</p>
-
-    <h3>3. Utilise le joueur le plus proche</h3>
-    <p>Ne change pas constamment de joueur. Contrôle celui qui est le mieux placé pour presser ou bloquer la trajectoire.</p>
-
-    <h3>4. Protège l’intérieur</h3>
-    <p>Oriente l’attaquant vers l’extérieur plutôt que vers le centre. Les centres et les tirs depuis l’axe sont souvent plus dangereux.</p>
-
-    <h3>5. Reviens vite après une perte de balle</h3>
-    <p>Après une perte de balle, la première réaction doit être de revenir en position. Cela évite les contre-attaques rapides.</p>
-
-    <h3>6. Communique avec ta défense</h3>
-    <p>En ligne, les défenseurs doivent avancer et reculer ensemble. Une défense désorganisée laisse facilement des espaces.</p>
-
-    <h3>7. Reste patient</h3>
-    <p>Tu n’as pas besoin de récupérer le ballon immédiatement. Parfois, ralentir l’attaque adverse suffit à forcer une erreur.</p>
-
+    <p>Une bonne défense ne consiste pas à courir partout. Elle repose sur la patience, la position et la lecture du jeu.</p>
+    <h3>Ne sortez pas tous</h3>
+    <p>Si plusieurs défenseurs quittent leur position en même temps, tu laisses des espaces dangereux derrière toi.</p>
+    <h3>Anticipe les passes</h3>
+    <p>Observe les trajectoires de passe. Placer ton joueur entre deux adversaires peut couper une attaque avant qu’elle devienne dangereuse.</p>
+    <h3>Utilise le pressing avec mesure</h3>
+    <p>Presser sans arrêt fatigue ton équipe et crée des espaces. Presse au bon moment, surtout près de ton but.</p>
+    <h3>Défends en équipe</h3>
+    <p>Le milieu doit aider la défense. Si tes milieux ne reviennent pas, tes défenseurs seront souvent isolés.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article14">
-    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80" alt="Android gaming">
+    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80" alt="Optimisation Android">
     <div class="tag">TECH</div>
     <h2>7 réglages Android pour mieux jouer à Free Fire et DLS</h2>
-    <p>Un téléphone Android peut mieux gérer les jeux mobiles avec quelques réglages simples. L’objectif est de réduire les lags, la chaleur et les interruptions.</p>
-
+    <p>Quelques réglages simples peuvent améliorer la fluidité de tes jeux mobiles et réduire les coupures.</p>
     <h3>1. Active le mode jeu</h3>
-    <p>Si ton téléphone possède un mode jeu, active-le. Il peut bloquer les notifications et optimiser les ressources pendant la partie.</p>
-
-    <h3>2. Ferme les applications inutiles</h3>
-    <p>Ferme les applications lourdes avant de jouer. Cela peut libérer de la mémoire et réduire la consommation en arrière-plan.</p>
-
-    <h3>3. Désactive le mode économie d’énergie</h3>
-    <p>Ce mode peut limiter les performances pour économiser la batterie. Désactive-le pendant les matchs compétitifs si ton téléphone le permet.</p>
-
-    <h3>4. Baisse les graphismes</h3>
-    <p>Des graphismes moins élevés peuvent offrir un framerate plus stable. Dans les jeux rapides, la fluidité est souvent plus importante que les détails visuels.</p>
-
-    <h3>5. Libère de l’espace de stockage</h3>
-    <p>Un téléphone presque plein peut devenir plus lent. Supprime les fichiers inutiles, les applications non utilisées et les anciens téléchargements.</p>
-
-    <h3>6. Évite la surchauffe</h3>
-    <p>Ne joue pas longtemps sous le soleil ou pendant la charge. La chaleur peut faire baisser les performances du téléphone.</p>
-
-    <h3>7. Garde ton système à jour</h3>
-    <p>Les mises à jour Android et les mises à jour des jeux améliorent parfois la stabilité, la sécurité et la compatibilité.</p>
-
+    <p>S’il est disponible, active-le avant de lancer une partie.</p>
+    <h3>2. Ferme les applications</h3>
+    <p>Ferme les applications récentes avant de jouer pour libérer de la mémoire.</p>
+    <h3>3. Désactive les notifications</h3>
+    <p>Les notifications peuvent faire perdre le focus pendant un match important.</p>
+    <h3>4. Baisse la qualité graphique</h3>
+    <p>Si ton téléphone chauffe ou ralentit, choisis des graphismes plus stables plutôt que la qualité maximale.</p>
+    <h3>5. Désactive les animations</h3>
+    <p>Réduire les animations système peut rendre l’interface plus réactive sur certains téléphones.</p>
+    <h3>6. Garde de l’espace libre</h3>
+    <p>Un stockage presque plein peut ralentir le téléphone et les jeux.</p>
+    <h3>7. Redémarre parfois le téléphone</h3>
+    <p>Un redémarrage peut fermer des processus bloqués et améliorer temporairement les performances.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article15">
-    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80" alt="Arnaque gaming">
+    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80" alt="Cybersécurité">
     <div class="tag">TECH</div>
     <h2>Évite les faux sites de diamants et de pièces dans les jeux</h2>
-    <p>Les arnaques ciblent souvent les joueurs qui cherchent des diamants Free Fire, des pièces DLS ou des crédits eFootball à petit prix. Un peu de vigilance peut protéger ton compte.</p>
-
-    <h3>1. Méfie-toi des prix trop bas</h3>
-    <p>Si un site propose des diamants ou des crédits beaucoup moins chers que les boutiques officielles, c’est souvent un signe d’arnaque.</p>
-
-    <h3>2. Vérifie l’adresse du site</h3>
-    <p>Regarde bien l’URL avant d’entrer ton email, ton mot de passe ou tes informations de paiement. Les faux sites imitent parfois les vrais.</p>
-
-    <h3>3. N’envoie jamais ton code OTP</h3>
-    <p>Aucun vendeur, administrateur ou support sérieux ne doit demander ton code de vérification. Ce code sert à protéger ton compte.</p>
-
-    <h3>4. Évite les liens reçus par message</h3>
-    <p>Les liens envoyés par des inconnus sur WhatsApp, Facebook ou Instagram peuvent mener à de fausses pages de connexion.</p>
-
-    <h3>5. Utilise les boutiques officielles</h3>
-    <p>Pour acheter des diamants, des crédits ou des objets, passe par les boutiques officielles du jeu ou des plateformes reconnues.</p>
-
-    <h3>6. Active la double authentification</h3>
-    <p>Protège ton email, Google, Facebook et tes comptes de jeu avec la vérification en deux étapes. Même si ton mot de passe fuite, ton compte reste mieux protégé.</p>
-
-    <h3>7. Ne partage pas tes identifiants</h3>
-    <p>Ne donne jamais ton mot de passe, même à un ami. Utilise plutôt les fonctions officielles de partage ou de connexion si elles existent.</p>
-
+    <p>Les arnaques ciblent souvent les joueurs qui cherchent des diamants, pièces ou comptes gratuits. Apprendre à les reconnaître peut te protéger.</p>
+    <h3>Méfie-toi des promesses trop belles</h3>
+    <p>Un site qui promet des milliers de diamants gratuitement demande généralement quelque chose en échange : ton compte, ton mot de passe ou un paiement.</p>
+    <h3>Vérifie l’adresse du site</h3>
+    <p>Les faux sites imitent souvent les vrais noms. Vérifie l’orthographe exacte de l’adresse avant de te connecter.</p>
+    <h3>Ne donne jamais ton mot de passe</h3>
+    <p>Aucun site légitime n’a besoin de ton mot de passe pour offrir une récompense.</p>
+    <h3>Utilise les boutiques officielles</h3>
+    <p>Pour les achats, passe par la boutique du jeu, Google Play ou l’App Store selon la plateforme.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
@@ -788,83 +823,80 @@ footer span{color:var(--accent)}
     <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=1200&q=80" alt="Wi-Fi gaming">
     <div class="tag">TECH</div>
     <h2>Wi‑Fi ou données mobiles : quelle connexion pour le gaming ?</h2>
-    <p>Pour les jeux en ligne comme Free Fire, DLS ou eFootball, la stabilité de la connexion compte souvent plus que la vitesse maximale.</p>
-
-    <h3>Pourquoi le Wi‑Fi est souvent meilleur</h3>
-    <p>Le Wi‑Fi est généralement plus stable qu’un réseau mobile faible. Rapproche-toi du routeur et évite les murs épais entre ton téléphone et la box.</p>
-
-    <h3>Quand les données mobiles peuvent convenir</h3>
-    <p>Les données mobiles peuvent être bonnes si le réseau est fort et stable. Évite cependant de jouer dans un endroit où le signal change souvent.</p>
-
-    <h3>Réduis la latence</h3>
-    <p>Ferme les téléchargements, les mises à jour et les vidéos en arrière-plan. Chaque appareil qui consomme Internet peut augmenter le délai de réponse.</p>
-
-    <h3>Teste avant un match important</h3>
-    <p>Fais quelques parties rapides avant une compétition. Si tu remarques des déconnexions ou des lags, change de réseau ou attends une meilleure connexion.</p>
-
-    <h3>Évite les VPN inutiles</h3>
-    <p>Un VPN peut augmenter la latence. Ne l’utilise que si tu en as réellement besoin, surtout pour les jeux compétitifs.</p>
-
+    <p>Pour les jeux en ligne, la stabilité est souvent plus importante que la vitesse maximale.</p>
+    <h3>Privilégie un Wi‑Fi stable</h3>
+    <p>Un Wi‑Fi proche du routeur est généralement plus stable que les données mobiles, surtout pour les parties compétitives.</p>
+    <h3>Évite les obstacles</h3>
+    <p>Les murs, les appareils électroniques et la distance peuvent affaiblir le signal Wi‑Fi.</p>
+    <h3>Vérifie la latence</h3>
+    <p>Une connexion rapide ne garantit pas une faible latence. Pour le gaming, une connexion stable avec peu de retard est meilleure.</p>
+    <h3>Évite les téléchargements</h3>
+    <p>Ne lance pas de gros téléchargements pendant une partie. Cela peut augmenter le lag et les coupures.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article17">
-    <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1200&q=80" alt="Batterie téléphone">
+    <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1200&q=80" alt="Batterie">
     <div class="tag">TECH</div>
     <h2>Préserve la batterie de ton téléphone quand tu joues souvent</h2>
-    <p>Les longues sessions de jeu chauffent le téléphone et sollicitent la batterie. Quelques habitudes simples peuvent prolonger sa durée de vie.</p>
-
-    <h3>1. Évite de jouer en chargeant</h3>
-    <p>Jouer pendant la charge augmente la chaleur. Si possible, charge ton téléphone avant ou après la session.</p>
-
-    <h3>2. Retire la coque si le téléphone chauffe</h3>
-    <p>Une coque épaisse peut retenir la chaleur. Si ton téléphone devient très chaud, retire-la temporairement pendant que tu joues.</p>
-
-    <h3>3. Baisse la luminosité</h3>
-    <p>Un écran très lumineux consomme plus d’énergie. Utilise une luminosité confortable, surtout en intérieur.</p>
-
-    <h3>4. Ferme les applications en arrière-plan</h3>
-    <p>Les applications inutiles consomment de la batterie et peuvent ralentir le téléphone. Ferme-les avant de lancer un jeu.</p>
-
-    <h3>5. Utilise un chargeur de qualité</h3>
-    <p>Privilégie un chargeur compatible avec ton téléphone. Les chargeurs de mauvaise qualité peuvent chauffer davantage l’appareil.</p>
-
-    <h3>6. Ne laisse pas le téléphone au soleil</h3>
-    <p>La chaleur extérieure s’ajoute à la chaleur produite par le jeu. Garde ton téléphone dans un endroit frais et ventilé.</p>
-
-    <h3>7. Fais des pauses</h3>
-    <p>Après 45 à 60 minutes de jeu, fais une courte pause. Cela aide ton téléphone à refroidir et améliore aussi ta concentration.</p>
-
+    <p>Les jeux mobiles consomment beaucoup d’énergie. Quelques habitudes peuvent réduire la surchauffe et préserver ta batterie.</p>
+    <h3>Évite la chaleur</h3>
+    <p>Ne joue pas longtemps sous le soleil ou dans un endroit très chaud. La chaleur accélère la dégradation de la batterie.</p>
+    <h3>Retire la coque si le téléphone chauffe</h3>
+    <p>Une coque peut retenir la chaleur. Si ton téléphone devient très chaud, retire-la pendant la partie.</p>
+    <h3>Ne joue pas toujours en chargeant</h3>
+    <p>Jouer en chargeant augmente la température. Si tu dois le faire, utilise un chargeur adapté et surveille la chaleur.</p>
+    <h3>Réduis la luminosité</h3>
+    <p>Une luminosité trop élevée consomme beaucoup d’énergie. Ajuste-la selon ton environnement.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article18">
-    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80" alt="Sécurité compte Google">
+    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80" alt="Sécurité compte">
     <div class="tag">TECH</div>
     <h2>Sécurise ton compte Google, Facebook et tes jeux mobiles</h2>
-    <p>Ton compte Google ou Facebook peut être lié à tes jeux, tes sauvegardes et tes achats. Le protéger évite de perdre ta progression.</p>
-
-    <h3>1. Utilise un mot de passe unique</h3>
-    <p>Ne réutilise pas le même mot de passe partout. Si un site est piraté, tes autres comptes restent protégés.</p>
-
-    <h3>2. Active la vérification en deux étapes</h3>
-    <p>Active-la sur Google, Facebook, WhatsApp et tes plateformes de jeu. Elle demande un code supplémentaire après ton mot de passe.</p>
-
-    <h3>3. Garde tes informations de récupération à jour</h3>
-    <p>Ajoute un numéro de téléphone et une adresse email de récupération. Cela t’aide à récupérer ton compte si tu perds l’accès.</p>
-
-    <h3>4. Vérifie les appareils connectés</h3>
-    <p>Dans les paramètres de sécurité, regarde les appareils connectés à ton compte. Déconnecte ceux que tu ne reconnais pas.</p>
-
-    <h3>5. Méfie-toi des faux support</h3>
-    <p>Un vrai support ne demande jamais ton mot de passe, ton code OTP ou l’accès à ton téléphone. Ne partage jamais ces informations.</p>
-
-    <h3>6. Mets à jour tes applications</h3>
-    <p>Les mises à jour corrigent parfois des problèmes de sécurité. Mets à jour Google Play Services, Facebook, WhatsApp et tes jeux régulièrement.</p>
-
+    <p>Tes comptes Google et Facebook peuvent être liés à tes jeux. Les sécuriser protège aussi ta progression et tes achats.</p>
+    <h3>Active la vérification en deux étapes</h3>
+    <p>Ajoute une seconde protection à tes comptes principaux. Cela réduit fortement le risque de piratage.</p>
+    <h3>Utilise des mots de passe différents</h3>
+    <p>Chaque compte important doit avoir son propre mot de passe. Utilise un gestionnaire de mots de passe si nécessaire.</p>
+    <h3>Vérifie les appareils connectés</h3>
+    <p>Dans les paramètres de sécurité, vérifie régulièrement les appareils et applications autorisés. Déconnecte ceux que tu ne reconnais pas.</p>
+    <h3>Garde tes informations de récupération</h3>
+    <p>Ajoute un email de récupération et un numéro de téléphone à jour. Cela peut t’aider à récupérer ton compte en cas de problème.</p>
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
+</section>
+
+<section id="contact">
+  <h2 class="section-title">📩 Contacte-nous</h2>
+  <p class="section-sub">Une question, une suggestion ou un partenariat ? Envoie-nous un message.</p>
+
+  <form class="contact-form" id="contactForm">
+    <div class="form-group">
+      <label for="name">Nom</label>
+      <input type="text" id="name" name="from_name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="from_email" required>
+    </div>
+
+    <div class="form-group">
+      <label for="subject">Sujet</label>
+      <input type="text" id="subject" name="subject" required>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" required></textarea>
+    </div>
+
+    <button type="submit" class="btn">Envoyer le message</button>
+    <div id="contactStatus"></div>
+  </form>
 </section>
 
 <footer>
@@ -877,27 +909,325 @@ footer span{color:var(--accent)}
   </p>
 </footer>
 
+<div class="modal" id="settingsModal">
+  <div class="modal-content">
+    <button class="modal-close" id="closeSettings">&times;</button>
+    <h3 style="margin-bottom:20px;color:var(--accent)">Paramètres du compte</h3>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="text" id="settingsEmail" readonly style="opacity:0.7">
+    </div>
+
+    <form id="changePasswordForm">
+      <div class="form-group">
+        <label>Nouveau mot de passe</label>
+        <input type="password" id="newPassword" minlength="6" required placeholder="Min. 6 caractères">
+      </div>
+
+      <div class="form-group">
+        <label>Confirmer le nouveau mot de passe</label>
+        <input type="password" id="confirmPassword" minlength="6" required>
+      </div>
+
+      <button type="submit" class="btn" style="width:100%">Changer le mot de passe</button>
+      <div id="passwordStatus"></div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="authModal">
+  <div class="modal-content">
+    <button class="modal-close" id="closeModal">&times;</button>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="login">Connexion</button>
+      <button class="tab" data-tab="signup">Inscription</button>
+      <button class="tab" data-tab="forgot">Mot de passe oublié</button>
+    </div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="loginEmail" required>
+      </div>
+
+      <div class="form-group">
+        <label>Mot de passe</label>
+        <input type="password" id="loginPassword" required>
+      </div>
+
+      <button type="submit" class="btn" style="width:100%">Se connecter</button>
+      <div id="loginStatus" class="error"></div>
+    </form>
+
+    <form id="signupForm" style="display:none">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="signupEmail" required>
+      </div>
+
+      <div class="form-group">
+        <label>Mot de passe (min. 6 caractères)</label>
+        <input type="password" id="signupPassword" required minlength="6">
+      </div>
+
+      <button type="submit" class="btn" style="width:100%">Créer un compte</button>
+      <div id="signupStatus" class="error"></div>
+    </form>
+
+    <form id="forgotForm" style="display:none">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="forgotEmail" required>
+      </div>
+
+      <button type="submit" class="btn" style="width:100%">Envoyer le lien de réinitialisation</button>
+      <div id="forgotStatus" class="error"></div>
+    </form>
+  </div>
+</div>
+
+<!-- EmailJS SDK : doit être AVANT le script module -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<!-- Firebase + EmailJS -->
+<script type="module">
+  const firebaseConfig = {
+    apiKey: "AIzaSyCCxk_WCdI6TrrwpfSB8DLaw5q1ABam8uQ",
+    authDomain: "gen7play.firebaseapp.com",
+    projectId: "gen7play",
+    storageBucket: "gen7play.firebasestorage.app",
+    messagingSenderId: "587301493803",
+    appId: "1:587301493803:web:6cd5637275e79e86aede6e",
+    measurementId: "G-NGD2G21DTT"
+  };
+
+  const EMAILJS_SERVICE_ID = "service_6il606m";
+  const EMAILJS_TEMPLATE_ID = "template_6ct0vtu";
+  const EMAILJS_PUBLIC_KEY = "XefhWux4HWPFGgnB1";
+
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
+    sendPasswordResetEmail,
+    updatePassword
+  } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const authBtns = document.getElementById("authBtns");
+  const userMenu = document.getElementById("userMenu");
+  const userBtn = document.getElementById("userBtn");
+  const userDropdown = document.getElementById("userDropdown");
+  const userAvatar = document.getElementById("userAvatar");
+  const userName = document.getElementById("userName");
+  const userEmailDisplay = document.getElementById("userEmailDisplay");
+  const loginBtn = document.getElementById("loginBtn");
+  const signupBtn = document.getElementById("signupBtn");
+  const modal = document.getElementById("authModal");
+  const closeModal = document.getElementById("closeModal");
+
+  userBtn.onclick = (e) => {
+    e.stopPropagation();
+    userDropdown.classList.toggle("active");
+  };
+
+  document.addEventListener("click", () => {
+    userDropdown.classList.remove("active");
+  });
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      authBtns.style.display = "none";
+      userMenu.style.display = "flex";
+
+      const email = user.email || "Utilisateur";
+      userEmailDisplay.textContent = email;
+      userName.textContent = email.split("@")[0];
+      userAvatar.textContent = email.charAt(0).toUpperCase();
+
+      document.getElementById("logoutBtn").onclick = async () => {
+        await signOut(auth);
+        userDropdown.classList.remove("active");
+      };
+
+      const settingsBtn = document.getElementById("settingsBtn");
+      const settingsModal = document.getElementById("settingsModal");
+      const closeSettings = document.getElementById("closeSettings");
+      const settingsEmail = document.getElementById("settingsEmail");
+
+      settingsBtn.onclick = () => {
+        settingsEmail.value = user.email || "";
+        settingsModal.classList.add("active");
+        userDropdown.classList.remove("active");
+      };
+
+      closeSettings.onclick = () => settingsModal.classList.remove("active");
+
+      settingsModal.onclick = (e) => {
+        if (e.target === settingsModal) settingsModal.classList.remove("active");
+      };
+
+      document.getElementById("changePasswordForm").onsubmit = async (e) => {
+        e.preventDefault();
+
+        const newPass = document.getElementById("newPassword").value;
+        const confirmPass = document.getElementById("confirmPassword").value;
+        const status = document.getElementById("passwordStatus");
+
+        if (newPass !== confirmPass) {
+          status.className = "error";
+          status.textContent = "Les mots de passe ne correspondent pas.";
+          return;
+        }
+
+        try {
+          await updatePassword(user, newPass);
+          status.className = "success";
+          status.textContent = "Mot de passe mis à jour avec succès !";
+          document.getElementById("changePasswordForm").reset();
+        } catch (err) {
+          status.className = "error";
+          status.textContent = err.code === "auth/requires-recent-login"
+            ? "Reconnecte-toi pour changer le mot de passe."
+            : "Erreur : " + err.message;
+        }
+      };
+    } else {
+      authBtns.style.display = "flex";
+      userMenu.style.display = "none";
+      userDropdown.classList.remove("active");
+    }
+  });
+
+  loginBtn.onclick = () => {
+    modal.classList.add("active");
+    showTab("login");
+  };
+
+  signupBtn.onclick = () => {
+    modal.classList.add("active");
+    showTab("signup");
+  };
+
+  closeModal.onclick = () => modal.classList.remove("active");
+
+  modal.onclick = (e) => {
+    if (e.target === modal) modal.classList.remove("active");
+  };
+
+  function showTab(tab) {
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    document.querySelector(`[data-tab="${tab}"]`).classList.add("active");
+
+    document.getElementById("loginForm").style.display = tab === "login" ? "block" : "none";
+    document.getElementById("signupForm").style.display = tab === "signup" ? "block" : "none";
+    document.getElementById("forgotForm").style.display = tab === "forgot" ? "block" : "none";
+  }
+
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.onclick = () => showTab(tab.dataset.tab);
+  });
+
+  document.getElementById("loginForm").onsubmit = async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+    const status = document.getElementById("loginStatus");
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      status.className = "success";
+      status.textContent = "Connexion réussie !";
+      setTimeout(() => modal.classList.remove("active"), 1000);
+    } catch (err) {
+      status.className = "error";
+      status.textContent = err.code === "auth/wrong-password"
+        ? "Mot de passe incorrect"
+        : "Erreur : " + err.message;
+    }
+  };
+
+  document.getElementById("signupForm").onsubmit = async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("signupEmail").value;
+    const password = document.getElementById("signupPassword").value;
+    const status = document.getElementById("signupStatus");
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      status.className = "success";
+      status.textContent = "Compte créé avec succès !";
+      setTimeout(() => modal.classList.remove("active"), 1000);
+    } catch (err) {
+      status.className = "error";
+      status.textContent = err.code === "auth/email-already-in-use"
+        ? "Cet email est déjà utilisé"
+        : "Erreur : " + err.message;
+    }
+  };
+
+  document.getElementById("forgotForm").onsubmit = async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("forgotEmail").value;
+    const status = document.getElementById("forgotStatus");
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      status.className = "success";
+      status.textContent = "Lien de réinitialisation envoyé ! Vérifie tes emails.";
+    } catch (err) {
+      status.className = "error";
+      status.textContent = "Erreur : " + err.message;
+    }
+  };
+
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+
+  document.getElementById("contactForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    const status = document.getElementById("contactStatus");
+    status.textContent = "Envoi en cours...";
+    status.className = "";
+
+    emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
+      .then(() => {
+        status.className = "success";
+        status.textContent = "Message envoyé avec succès ! Nous te répondrons bientôt.";
+        this.reset();
+      })
+      .catch((err) => {
+        status.className = "error";
+        status.textContent = "Erreur lors de l'envoi. Réessaie plus tard.";
+        console.error(err);
+      });
+  };
+</script>
+
 <script>
 function openArticle(articleId){
   const blogList = document.getElementById("blogList");
   const articles = document.querySelectorAll(".article");
 
-  if (blogList){
-    blogList.style.display = "none";
-  }
+  if (blogList) blogList.style.display = "none";
 
-  articles.forEach(function(article){
-    article.classList.remove("active");
-  });
+  articles.forEach(article => article.classList.remove("active"));
 
-  const selectedArticle = document.getElementById(articleId);
+  const selected = document.getElementById(articleId);
 
-  if (selectedArticle){
-    selectedArticle.classList.add("active");
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+  if (selected) {
+    selected.classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 }
 
@@ -905,42 +1235,100 @@ function closeArticle(){
   const blogList = document.getElementById("blogList");
   const articles = document.querySelectorAll(".article");
 
-  articles.forEach(function(article){
-    article.classList.remove("active");
-  });
+  articles.forEach(article => article.classList.remove("active"));
 
-  if (blogList){
-    blogList.style.display = "grid";
-  }
+  if (blogList) blogList.style.display = "grid";
 
   const blogSection = document.getElementById("blog");
-
-  if (blogSection){
-    blogSection.scrollIntoView({
-      behavior: "smooth"
-    });
-  }
+  if (blogSection) blogSection.scrollIntoView({ behavior: "smooth" });
 }
 
 document.addEventListener("click", function(event){
   const readButton = event.target.closest(".read-more");
 
-  if (readButton){
+  if (readButton) {
     const articleId = readButton.getAttribute("data-article");
-
-    if (articleId){
-      openArticle(articleId);
-    }
-
+    if (articleId) openArticle(articleId);
     return;
   }
 
   const backButton = event.target.closest(".back-btn");
-
-  if (backButton){
-    closeArticle();
-  }
+  if (backButton) closeArticle();
 });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+(function(){
+  const canvas = document.getElementById('bg-canvas');
+  if(!canvas) return;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  const particlesCount = 120;
+  const geometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(particlesCount * 3);
+  const colors = new Float32Array(particlesCount * 3);
+
+  for(let i=0;i<particlesCount*3;i+=3){
+    positions[i] = (Math.random()-0.5)*40;
+    positions[i+1] = (Math.random()-0.5)*25;
+    positions[i+2] = (Math.random()-0.5)*20;
+
+    const t = Math.random();
+    colors[i] = 0 + t*0.2;
+    colors[i+1] = 0.8 + t*0.2;
+    colors[i+2] = 0.5 + t*0.5;
+  }
+
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+  const material = new THREE.PointsMaterial({
+    size:0.12,
+    vertexColors:true,
+    transparent:true,
+    opacity:0.7
+  });
+
+  const particles = new THREE.Points(geometry, material);
+  scene.add(particles);
+
+  camera.position.z = 12;
+
+  let mouseX=0, mouseY=0;
+
+  document.addEventListener('mousemove', (e)=>{
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  function animate(){
+    requestAnimationFrame(animate);
+
+    particles.rotation.y += 0.0012;
+    particles.rotation.x += 0.0006;
+
+    camera.position.x += (mouseX * 1.5 - camera.position.x) * 0.05;
+    camera.position.y += (-mouseY * 1.2 - camera.position.y) * 0.05;
+
+    camera.lookAt(scene.position);
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  window.addEventListener('resize', ()=>{
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+})();
 </script>
 
 </body>
