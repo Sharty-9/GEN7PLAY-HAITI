@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEN7PLAY</title>
+<style>
+:root{
+  --bg:#080b12;
+  --panel:#111827;
+  --text:#f1f5f9;
+  --muted:#94a3b8;
+  --accent:#00f5a0;
+  --blue:#00bfff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  scroll-behavior:smooth;
+}
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(8,11,18,.95);
+  border-bottom:1px solid #1e293b;
+  padding:18px 8%;
+  display:flex;justify-content:space-between;
+  align-items:center;flex-wrap:wrap;gap:15px;
+}
+.logo{font-size:23px;font-weight:bold;color:var(--accent)}
+nav{display:flex;gap:20px;flex-wrap:wrap}
+nav a{color:var(--text);text-decoration:none}
+nav a:hover{color:var(--accent)}
+.hero{
+  min-height:85vh;
+  display:flex;align-items:center;
+  padding:60px 8%;
+  background:
+    linear-gradient(90deg,#080b12 30%,transparent),
+    url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1400&q=80')
+    center/cover;
+}
+.hero-content{max-width:650px}
+.hero h1{font-size:clamp(35px,6vw,65px);margin-bottom:20px}
+.hero h1 span{color:var(--accent)}
+.hero p{color:var(--muted);font-size:18px;line-height:1.7}
+.btn{
+  display:inline-block;margin-top:25px;
+  padding:13px 22px;border-radius:8px;
+  background:var(--accent);color:#06110c;
+  text-decoration:none;font-weight:bold;
+  border:none;cursor:pointer;
+}
+.btn:hover{opacity:.85}
+.channel-btn{
+  background:transparent;
+  border:2px solid var(--accent);
+  color:var(--accent);
+  margin-left:12px;
+}
+.channel-btn:hover{
+  background:var(--accent);
+  color:#06110c;
+}
+section{padding:75px 8%}
+.section-title{font-size:30px;margin-bottom:12px}
+.section-sub{color:var(--muted);margin-bottom:30px}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:22px;
+}
+.card{
+  background:var(--panel);
+  border:1px solid #243244;
+  border-radius:14px;overflow:hidden;
+  transition:.3s;
+}
+.card:hover{transform:translateY(-5px);border-color:var(--accent)}
+.card img{
+  width:100%;height:190px;object-fit:cover;
+}
+.card-content{padding:20px}
+.card h3{margin-bottom:12px}
+.card p{color:var(--muted);line-height:1.6}
+.tag{
+  color:var(--accent);font-size:12px;
+  font-weight:bold;margin-bottom:10px;
+}
+.read-more{
+  display:inline-block;margin-top:15px;
+  color:var(--accent);text-decoration:none;
+  font-weight:bold;
+}
+.article{
+  display:none;
+  max-width:850px;
+  margin:0 auto;
+}
+.article.active{display:block}
+.article img{
+  width:100%;height:320px;object-fit:cover;
+  border-radius:14px;margin-bottom:25px;
+}
+.article h2{font-size:30px;margin-bottom:15px}
+.article h3{margin:25px 0 10px;color:var(--accent)}
+.article p{color:var(--muted);line-height:1.8;margin-bottom:15px}
+.article ul{margin:0 0 20px 20px;color:var(--muted);line-height:1.8}
+.back-btn{
+  margin-top:30px;
+  background:transparent;
+  border:2px solid var(--accent);
+  color:var(--accent);
+}
+.back-btn:hover{background:var(--accent);color:#06110c}
+footer{
+  text-align:center;padding:35px 8%;
+  border-top:1px solid #1e293b;
+  color:var(--muted);
+}
+footer span{color:var(--accent)}
+@media(max-width:600px){
+  header{justify-content:center}
+  nav{justify-content:center}
+  .hero{min-height:65vh}
+  section{padding:55px 6%}
+  .channel-btn{margin-left:0;margin-top:12px}
+  .article img{height:220px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">GEN7PLAY</div>
+  <nav>
+    <a href="#home">Accueil</a>
+    <a href="#blog">Blog</a>
+    <a href="https://whatsapp.com/channel/0029Vb99MNz2f3EPTXFQU411" target="_blank">Chaîne WhatsApp</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="tag">GEN7PLAY — GAMING & TECH COMMUNITY</div>
+    <h1>LEVEL UP.<br><span>HAITI.</span></h1>
+    <p>
+      Gaming, technologie et communauté.
+      Découvre des conseils gaming, des astuces tech et du contenu pour progresser.
+    </p>
+    <a href="#blog" class="btn">Explorer GEN7PLAY →</a>
+    <a href="https://whatsapp.com/channel/0029Vb99MNz2f3EPTXFQU411" target="_blank" class="btn channel-btn">
+      Rejoins GEN7 OFFICIAL
+    </a>
+  </div>
+</section>
+
+<section id="blog">
+  <h2 class="section-title">💡 Blog Gaming & Tech</h2>
+  <p class="section-sub">Conseils, astuces et connaissances pour les joueurs.</p>
+
+  <div class="grid" id="blogList">
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=800&q=80" alt="Manette de jeu">
+      <div class="card-content">
+        <div class="tag">GAMING</div>
+        <h3>5 conseils pour progresser rapidement en gaming</h3>
+        <p>Améliore ta visée, tes réflexes et ta stratégie avec une méthode simple.</p>
+        <a href="#" class="read-more" onclick="openArticle('article1'); return false;">Lire l’article →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="Téléphone Android">
+      <div class="card-content">
+        <div class="tag">TECH</div>
+        <h3>Optimise ton Android pour le gaming</h3>
+        <p>Réduis les lags, améliore les performances et profite mieux de tes jeux mobiles.</p>
+        <a href="#" class="read-more" onclick="openArticle('article2'); return false;">Lire l’article →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Composants informatiques">
+      <div class="card-content">
+        <div class="tag">SÉCURITÉ</div>
+        <h3>Protège tes comptes de jeu et tes données</h3>
+        <p>Quelques habitudes simples pour éviter le piratage et protéger ta progression.</p>
+        <a href="#" class="read-more" onclick="openArticle('article3'); return false;">Lire l’article →</a>
+      </div>
+    </div>
+  </div>
+
+  <article class="article" id="article1">
+    <img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=1200&q=80" alt="Gaming">
+    <div class="tag">GAMING</div>
+    <h2>5 conseils pour progresser rapidement en gaming</h2>
+    <p>Progresser dans les jeux ne dépend pas seulement de la chance. Avec une bonne méthode, tu peux améliorer ta visée, tes réflexes, ta prise de décision et ta régularité.</p>
+
+    <h3>1. Entraîne-toi avec un objectif</h3>
+    <p>Ne joue pas seulement pour jouer. À chaque session, choisis un objectif précis : améliorer ta visée, mieux te déplacer, apprendre une carte ou réduire tes erreurs.</p>
+
+    <h3>2. Travaille une compétence à la fois</h3>
+    <p>Concentre-toi sur une seule chose pendant 10 à 20 minutes : visée rapide, suivi de cible, changement d’arme ou placement. Entraîner plusieurs compétences en même temps rend les progrès plus difficiles à mesurer.</p>
+
+    <h3>3. Ajuste ta sensibilité</h3>
+    <p>Une sensibilité trop élevée peut rendre tes mouvements instables. Commence avec une sensibilité plus basse, puis augmente-la progressivement jusqu’à trouver un réglage confortable.</p>
+
+    <h3>4. Analyze tes défaites</h3>
+    <p>Après une partie difficile, demande-toi : ai-je mal positionné mon personnage, ai-je pris un mauvais combat ou ai-je manqué une information importante ? Les erreurs répétées sont les meilleures leçons.</p>
+
+    <h3>5. Repose-toi</h3>
+    <p>Jouer fatigué réduit ta concentration et tes réflexes. Fais des pauses régulières, hydrate-toi et arrête une session quand tu sens que ta précision baisse.</p>
+
+    <button class="btn back-btn" onclick="closeArticle()">← Retour au blog</button>
+  </article>
+
+  <article class="article" id="article2">
+    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" alt="Android gaming">
+    <div class="tag">TECH</div>
+    <h2>Optimise ton Android pour le gaming</h2>
+    <p>Un téléphone Android peut offrir une meilleure expérience de jeu avec quelques réglages simples. L’objectif est de réduire la chaleur, les ralentissements et les interruptions.</p>
+
+    <h3>1. Ferme les applications inutiles</h3>
+    <p>Avant de lancer un jeu, ferme les applications que tu n’utilises pas. Cela peut libérer de la mémoire et réduire les applications qui consomment des ressources en arrière-plan.</p>
+
+    <h3>2. Désactive le mode économie d’énergie</h3>
+    <p>Le mode économie d’énergie peut limiter les performances du téléphone pour préserver la batterie. Pour les jeux compétitifs, désactive-le avant de jouer afin que l’appareil puisse fonctionner à pleine capacité. [18]</p>
+
+    <h3>3. Utilise une connexion stable</h3>
+    <p>Le Wi‑Fi est souvent plus stable qu’un réseau mobile faible. Rapproche-toi du routeur, évite les téléchargements pendant que tu joues et limite les autres appareils qui utilisent beaucoup Internet. [11]</p>
+
+    <h3>4. Évite de jouer pendant la charge</h3>
+    <p>Jouer pendant que le téléphone charge peut augmenter la chaleur. La chaleur peut provoquer une baisse de performance. Si possible, charge ton téléphone avant ou après la session. [11][16]</p>
+
+    <h3>5. Baisse les graphismes si nécessaire</h3>
+    <p>Si ton jeu lag, réduis les ombres, les effets visuels et la résolution. Un framerate plus stable est souvent plus utile qu’un graphisme très élevé.</p>
+
+    <button class="btn back-btn" onclick="closeArticle()">← Retour au blog</button>
+  </article>
+
+  <article class="article" id="article3">
+    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80" alt="Cybersécurité">
+    <div class="tag">SÉCURITÉ</div>
+    <h2>Protège tes comptes de jeu et tes données</h2>
+    <p>Ton compte de jeu, tes messages et tes informations personnelles ont de la valeur. Quelques habitudes simples peuvent réduire fortement le risque de piratage.</p>
+
+    <h3>1. Utilise un mot de passe unique</h3>
+    <p>Ne réutilise pas le même mot de passe pour ton email, tes réseaux sociaux et tes jeux. Si un site est piraté, tes autres comptes restent protégés.</p>
+
+    <h3>2. Active la vérification en deux étapes</h3>
+    <p>Active la double authentification sur ton email, WhatsApp, Google, Facebook et tes plateformes de jeu. Même si quelqu’un obtient ton mot de passe, il aura encore besoin d’un code supplémentaire.</p>
+
+    <h3>3. Méfie-toi des liens étranges</h3>
+    <p>Ne clique pas sur les liens qui promettent des skins gratuits, des diamants, de l’argent facile ou des concours non officiels. Vérifie toujours l’adresse du site avant d’entrer tes informations.</p>
+
+    <h3>4. Ne partage jamais ton code de vérification</h3>
+    <p>Aucun administrateur, support technique ou ami sérieux ne devrait te demander ton code OTP, ton mot de passe ou l’accès à ton téléphone.</p>
+
+    <h3>5. Mets à jour ton téléphone</h3>
+    <p>Les mises à jour Android corrigent souvent des failles de sécurité. Installe-les lorsque ton téléphone te le propose, de préférence avec une connexion Wi‑Fi stable.</p>
+
+    <button class="btn back-btn" onclick="closeArticle()">← Retour au blog</button>
+  </article>
+</section>
+
+<footer>
+  <p>© 2026 <span>GEN7PLAY</span> — Gaming & Tech Community</p>
+  <p style="margin-top:10px">Gaming • Technology • Community</p>
+  <p style="margin-top:15px">
+    <a href="https://whatsapp.com/channel/0029Vb99MNz2f3EPTXFQU411" target="_blank" style="color:var(--accent);text-decoration:none">
+      Follow the GEN7 OFFICIAL channel on WhatsApp
+    </a>
+  </p>
+</footer>
+
+<script>
+const WHATSAPP = "50934635480";
+
+function openArticle(articleId){
+  document.getElementById("blogList").style.display = "none";
+  document.querySelectorAll(".article").forEach(article => {
+    article.classList.remove("active");
+  });
+  document.getElementById(articleId).classList.add("active");
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function closeArticle(){
+  document.querySelectorAll(".article").forEach(article => {
+    article.classList.remove("active");
+  });
+  document.getElementById("blogList").style.display = "grid";
+  document.getElementById("blog").scrollIntoView({behavior:"smooth"});
+}
+</script>
+
+</body>
+</html>
