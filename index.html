@@ -11,7 +11,6 @@
   --text:#f8fafc;
   --muted:#94a3b8;
   --accent:#00f5a0;
-  --accent-glow:rgba(0,245,160,0.4);
   --blue:#00d4ff;
   --border:rgba(255,255,255,0.08);
 }
@@ -333,7 +332,6 @@ footer span{color:var(--accent);font-weight:700}
 
       <div class="dropdown" id="userDropdown">
         <div id="userEmailDisplay"></div>
-        <button id="settingsBtn">Paramètres</button>
         <button id="logoutBtn">Déconnexion</button>
       </div>
     </div>
@@ -1199,10 +1197,6 @@ onAuthStateChanged(auth, (user) => {
     document.getElementById("logoutBtn").onclick = async () => {
       await signOut(auth);
     };
-
-    document.getElementById("settingsBtn").onclick = () => {
-      userDropdown.classList.remove("active");
-    };
   } else {
     authBtns.style.display = "flex";
     userMenu.style.display = "none";
@@ -1322,7 +1316,7 @@ async function countArticleView(articleId){
     }
 
   } catch(error){
-    console.error(error);
+    console.error("Erreur vues :", error);
   }
 }
 
@@ -1499,7 +1493,7 @@ const articleData = {
   }
 };
 
-function openArticle(articleId){
+function openArticle(articleId, updateUrl = true){
   const blogList = document.getElementById("blogList");
   const articles = document.querySelectorAll(".article");
 
@@ -1514,6 +1508,11 @@ function openArticle(articleId){
     addRelatedPosts(articleId);
     countArticleView(articleId);
     loadComments(articleId);
+
+    if(updateUrl){
+      history.pushState(null, "", "#" + articleId);
+    }
+
     window.scrollTo({ top:0, behavior:"smooth" });
   }
 }
@@ -1525,6 +1524,8 @@ function closeArticle(){
   articles.forEach(article => article.classList.remove("active"));
 
   if(blogList) blogList.style.display = "grid";
+
+  history.pushState(null, "", location.pathname);
 
   document.getElementById("blog").scrollIntoView({ behavior:"smooth" });
 }
@@ -1622,6 +1623,24 @@ document.getElementById("blogSearch").addEventListener("input", function(){
     const text = card.textContent.toLowerCase();
     card.style.display = text.includes(value) ? "block" : "none";
   });
+});
+
+window.addEventListener("popstate", function(){
+  const articleId = location.hash.replace("#", "");
+
+  if(articleId && document.getElementById(articleId)){
+    openArticle(articleId, false);
+  } else {
+    closeArticle();
+  }
+});
+
+window.addEventListener("load", function(){
+  const articleId = location.hash.replace("#", "");
+
+  if(articleId && document.getElementById(articleId)){
+    openArticle(articleId, false);
+  }
 });
 </script>
 
