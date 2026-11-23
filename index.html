@@ -1354,6 +1354,9 @@ function loadComments(articleId){
   });
 }
 
+window.countArticleView = countArticleView;
+window.loadComments = loadComments;
+
 document.addEventListener("submit", async function(event){
   const form = event.target.closest(".comment-form");
   if(!form) return;
