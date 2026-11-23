@@ -8,13 +8,11 @@
 :root{
   --bg:#05070d;
   --panel:#0f172a;
-  --panel-hover:#1e293b;
   --text:#f8fafc;
   --muted:#94a3b8;
   --accent:#00f5a0;
   --accent-glow:rgba(0,245,160,0.4);
   --blue:#00d4ff;
-  --purple:#a855f7;
   --border:rgba(255,255,255,0.08);
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -23,9 +21,6 @@ body{
   background:var(--bg);
   color:var(--text);
   scroll-behavior:smooth;
-  background-image:
-    radial-gradient(circle at 20% 30%, rgba(0,245,160,0.08), transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(0,212,255,0.06), transparent 40%);
 }
 header{
   position:sticky;top:0;z-index:100;
@@ -37,79 +32,52 @@ header{
   align-items:center;flex-wrap:wrap;gap:12px;
 }
 .logo{
-  font-size:26px;font-weight:800;letter-spacing:-0.5px;
+  font-size:26px;font-weight:800;
   background:linear-gradient(135deg,var(--accent),var(--blue));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  background-clip:text;
 }
 nav{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
-nav a{
-  color:var(--text);text-decoration:none;font-weight:500;
-  position:relative;padding:4px 0;
-}
+nav a{color:var(--text);text-decoration:none;font-weight:500}
 nav a:hover{color:var(--accent)}
-nav a::after{
-  content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;
-  background:var(--accent);transition:width .3s;
-}
-nav a:hover::after{width:100%}
 .auth-btns{display:flex;gap:10px}
 .auth-btn{
   padding:10px 18px;border-radius:10px;
   background:linear-gradient(135deg,var(--accent),#00c97a);
-  color:#04150e;font-weight:700;font-size:14px;
-  border:none;cursor:pointer;
-  box-shadow:0 0 20px var(--accent-glow);
-  transition:all .25s;
+  color:#04150e;font-weight:700;border:none;cursor:pointer;
 }
-.auth-btn:hover{transform:translateY(-2px);box-shadow:0 0 30px var(--accent-glow)}
 .auth-btn.outline{
   background:transparent;border:2px solid var(--accent);color:var(--accent);
-  box-shadow:none;
 }
-.auth-btn.outline:hover{background:var(--accent);color:#04150e}
 .user-menu{position:relative;display:flex;align-items:center}
 .user-btn{
   display:flex;align-items:center;gap:8px;
   background:rgba(255,255,255,0.05);
   border:1px solid var(--border);
   border-radius:12px;padding:8px 14px;
-  color:var(--text);cursor:pointer;font-size:14px;
-  transition:all .2s;
+  color:var(--text);cursor:pointer;
 }
-.user-btn:hover{border-color:var(--accent);background:rgba(0,245,160,0.08)}
 .user-avatar{
   width:32px;height:32px;border-radius:50%;
   background:linear-gradient(135deg,var(--accent),var(--blue));
   color:#04150e;display:flex;align-items:center;justify-content:center;
-  font-weight:800;font-size:14px;
+  font-weight:800;
 }
 .dropdown{
   display:none;position:absolute;top:100%;right:0;margin-top:10px;
   background:var(--panel);border:1px solid var(--border);
   border-radius:14px;min-width:240px;
   box-shadow:0 20px 50px rgba(0,0,0,.5);
-  z-index:150;overflow:hidden;
-  backdrop-filter:blur(12px);
+  z-index:150;
 }
 .dropdown.active{display:block}
-.dropdown a, .dropdown button{
+.dropdown a,.dropdown button{
   display:block;width:100%;text-align:left;padding:13px 18px;
   background:none;border:none;color:var(--text);
-  text-decoration:none;font-size:14px;cursor:pointer;
-  transition:background .2s;
+  text-decoration:none;cursor:pointer;
 }
-.dropdown a:hover, .dropdown button:hover{
+.dropdown a:hover,.dropdown button:hover{
   background:rgba(0,245,160,0.1);color:var(--accent);
-}
-.dropdown .user-email{
-  padding:14px 18px;color:var(--muted);font-size:13px;
-  border-bottom:1px solid var(--border);word-break:break-all;
-}
-.dropdown .section-title-menu{
-  padding:10px 18px 6px;font-size:11px;color:var(--muted);
-  text-transform:uppercase;letter-spacing:1px;font-weight:600;
 }
 .hero{
   min-height:90vh;
@@ -119,40 +87,10 @@ nav a:hover::after{width:100%}
     linear-gradient(105deg,rgba(5,7,13,0.92) 0%,rgba(5,7,13,0.6) 50%,transparent 100%),
     url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1600&q=80')
     center/cover;
-  position:relative;
-}
-.hero::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at 30% 50%,rgba(0,245,160,0.15),transparent 50%);
-  pointer-events:none;
-}
-.hero-content{animation:fadeUp 1s ease-out both}
-.hero h1{animation:fadeUp 1s ease-out 0.2s both}
-.hero p{animation:fadeUp 1s ease-out 0.4s both}
-.btn, .channel-btn{animation:fadeUp 1s ease-out 0.6s both}
-.card{animation:fadeUp 0.8s ease-out both}
-.card:nth-child(2){animation-delay:0.1s}
-.card:nth-child(3){animation-delay:0.2s}
-.card:nth-child(4){animation-delay:0.3s}
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(30px)}
-  to{opacity:1;transform:translateY(0)}
-}
-.logo{animation:glowPulse 3s ease-in-out infinite}
-@keyframes glowPulse{
-  0%,100%{filter:drop-shadow(0 0 6px rgba(0,245,160,0.4))}
-  50%{filter:drop-shadow(0 0 18px rgba(0,245,160,0.8))}
-}
-.hero .tag{
-  display:inline-block;background:rgba(0,245,160,0.15);
-  border:1px solid rgba(0,245,160,0.3);color:var(--accent);
-  padding:6px 14px;border-radius:999px;font-size:12px;
-  font-weight:700;letter-spacing:1px;margin-bottom:18px;
 }
 .hero h1{
   font-size:clamp(42px,7vw,78px);
   font-weight:800;line-height:1.05;margin-bottom:18px;
-  letter-spacing:-1px;
 }
 .hero h1 span{
   background:linear-gradient(135deg,var(--accent),var(--blue));
@@ -164,21 +102,14 @@ nav a:hover::after{width:100%}
   margin-top:28px;padding:14px 26px;border-radius:12px;
   background:linear-gradient(135deg,var(--accent),#00d98a);
   color:#04150e;text-decoration:none;font-weight:700;
-  border:none;cursor:pointer;font-size:15px;
-  box-shadow:0 0 25px var(--accent-glow);
-  transition:all .25s;
+  border:none;cursor:pointer;
 }
-.btn:hover{transform:translateY(-3px);box-shadow:0 0 40px var(--accent-glow)}
 .channel-btn{
   background:transparent;border:2px solid var(--accent);
-  color:var(--accent);margin-left:12px;box-shadow:none;
+  color:var(--accent);margin-left:12px;
 }
-.channel-btn:hover{background:var(--accent);color:#04150e}
 section{padding:90px 6%}
-.section-title{
-  font-size:36px;font-weight:800;margin-bottom:10px;
-  letter-spacing:-0.5px;
-}
+.section-title{font-size:36px;font-weight:800;margin-bottom:10px}
 .section-sub{color:var(--muted);margin-bottom:36px;font-size:17px}
 .grid{
   display:grid;
@@ -189,33 +120,22 @@ section{padding:90px 6%}
   background:rgba(15,23,42,0.7);
   border:1px solid var(--border);
   border-radius:18px;overflow:hidden;
-  transition:all .3s cubic-bezier(.4,0,.2,1);
-  backdrop-filter:blur(8px);
-}
-.card:hover{
-  transform:translateY(-8px);
-  border-color:rgba(0,245,160,0.4);
-  box-shadow:0 20px 40px rgba(0,0,0,.4),0 0 30px rgba(0,245,160,0.15);
 }
 .card img{width:100%;height:200px;object-fit:cover}
 .card-content{padding:22px}
-.card h3{margin-bottom:10px;font-size:18px;font-weight:700}
+.card h3{margin-bottom:10px;font-size:18px}
 .card p{color:var(--muted);line-height:1.6;font-size:15px}
 .tag{
   color:var(--accent);font-size:12px;font-weight:700;
-  margin-bottom:10px;letter-spacing:0.5px;
+  margin-bottom:10px;
 }
 .read-more{
-  display:inline-flex;align-items:center;gap:6px;
   margin-top:16px;padding:9px 16px;border:none;
   border-radius:8px;background:transparent;color:var(--accent);
-  font-weight:700;cursor:pointer;font-size:14px;
-  transition:all .2s;
+  font-weight:700;cursor:pointer;
 }
 .read-more:hover{background:var(--accent);color:#04150e}
-.article{
-  display:none;max-width:860px;margin:0 auto;
-}
+.article{display:none;max-width:860px;margin:0 auto}
 .article.active{display:block}
 .article img{
   width:100%;height:380px;object-fit:cover;
@@ -223,14 +143,48 @@ section{padding:90px 6%}
 }
 .article h2{font-size:34px;margin-bottom:16px;font-weight:800}
 .article h3{margin:28px 0 12px;color:var(--accent);font-size:22px}
-.article p{color:var(--muted);line-height:1.85;margin-bottom:16px;font-size:16px}
-.article ul{margin:0 0 22px 22px;color:var(--muted);line-height:1.8}
+.article p{color:var(--muted);line-height:1.85;margin-bottom:16px}
 .back-btn{
   margin-top:32px;background:transparent;
   border:2px solid var(--accent);color:var(--accent);
 }
 .back-btn:hover{background:var(--accent);color:#04150e}
 
+.search-box{
+  max-width:520px;
+  margin:0 auto 35px;
+}
+.search-box input{
+  width:100%;
+  padding:14px 18px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#0a0f1a;
+  color:var(--text);
+}
+.article-meta{
+  display:flex;
+  gap:14px;
+  margin-bottom:20px;
+  color:var(--muted);
+  font-size:14px;
+}
+.article-actions{
+  margin-top:32px;
+}
+.share-btn{
+  padding:12px 20px;
+  border-radius:10px;
+  border:1px solid var(--accent);
+  background:transparent;
+  color:var(--accent);
+  font-weight:700;
+  cursor:pointer;
+}
+.share-btn:hover{
+  background:var(--accent);
+  color:#04150e;
+}
 .related-posts{
   margin-top:45px;
   padding-top:28px;
@@ -250,68 +204,88 @@ section{padding:90px 6%}
   background:rgba(15,23,42,0.7);
   border:1px solid var(--border);
   border-radius:14px;
-  padding:18px;
+  overflow:hidden;
   cursor:pointer;
-  transition:all .25s;
 }
-.related-card:hover{
-  transform:translateY(-5px);
-  border-color:rgba(0,245,160,0.4);
-  box-shadow:0 15px 30px rgba(0,0,0,.35);
+.related-card img{
+  width:100%;
+  height:140px;
+  object-fit:cover;
 }
-.related-card .tag{
-  margin-bottom:8px;
+.related-content{
+  padding:16px;
 }
 .related-card h4{
   font-size:16px;
-  line-height:1.4;
   margin-bottom:8px;
 }
 .related-card p{
   color:var(--muted);
   font-size:14px;
+}
+.comments-section{
+  margin-top:40px;
+  padding-top:25px;
+  border-top:1px solid var(--border);
+}
+.comments-section h3{
+  color:var(--accent);
+  margin-bottom:18px;
+}
+.comment-form{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-bottom:25px;
+}
+.comment-form input,
+.comment-form textarea{
+  width:100%;
+  padding:13px 15px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#0a0f1a;
+  color:var(--text);
+}
+.comment-form textarea{
+  min-height:90px;
+  resize:vertical;
+}
+.comment{
+  background:rgba(15,23,42,0.7);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:12px;
+}
+.comment-name{
+  color:var(--accent);
+  font-weight:700;
+  margin-bottom:6px;
+}
+.comment-text{
+  color:var(--muted);
   line-height:1.5;
 }
-
 .modal{
-  display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+  display:none;position:fixed;inset:0;
   background:rgba(0,0,0,.75);z-index:200;
   justify-content:center;align-items:center;
-  backdrop-filter:blur(6px);
 }
 .modal.active{display:flex}
 .modal-content{
   background:var(--panel);border:1px solid var(--border);
   border-radius:18px;padding:32px;width:90%;max-width:440px;
-  position:relative;box-shadow:0 25px 50px rgba(0,0,0,.5);
-}
-.modal-close{
-  position:absolute;top:16px;right:16px;
-  background:none;border:none;color:var(--muted);
-  font-size:26px;cursor:pointer;
-}
-.tabs{display:flex;gap:8px;margin-bottom:22px}
-.tab{
-  flex:1;padding:11px;text-align:center;
-  background:transparent;border:1px solid var(--border);
-  color:var(--text);border-radius:10px;cursor:pointer;font-weight:600;
-}
-.tab.active{
-  background:linear-gradient(135deg,var(--accent),#00d98a);
-  color:#04150e;border-color:transparent;
 }
 .form-group{margin-bottom:16px}
-.form-group label{display:block;margin-bottom:7px;color:var(--muted);font-size:14px;font-weight:500}
-.form-group input, .form-group textarea{
+.form-group label{
+  display:block;margin-bottom:7px;color:var(--muted);
+}
+.form-group input,.form-group textarea{
   width:100%;padding:13px 14px;border-radius:10px;
   border:1px solid var(--border);background:#0a0f1a;
-  color:var(--text);font-size:15px;transition:border .2s;
+  color:var(--text);
 }
-.form-group input:focus, .form-group textarea:focus{
-  outline:none;border-color:var(--accent);
-  box-shadow:0 0 0 3px rgba(0,245,160,0.15);
-}
-.form-group textarea{min-height:110px;resize:vertical}
 .error{color:#f87171;font-size:13px;margin-top:6px}
 .success{color:var(--accent);font-size:13px;margin-top:6px}
 .contact-form{
@@ -319,29 +293,23 @@ section{padding:90px 6%}
   background:rgba(15,23,42,0.6);
   border:1px solid var(--border);
   border-radius:18px;padding:36px;
-  backdrop-filter:blur(10px);
 }
 footer{
   text-align:center;padding:50px 6%;
   border-top:1px solid var(--border);
-  color:var(--muted);background:rgba(0,0,0,0.3);
+  color:var(--muted);
 }
 footer span{color:var(--accent);font-weight:700}
 @media(max-width:700px){
   header{justify-content:center;padding:14px 4%}
-  nav{justify-content:center;gap:14px}
-  .hero{min-height:75vh;padding:60px 5%}
+  nav{justify-content:center}
   section{padding:60px 5%}
-  .channel-btn{margin-left:0;margin-top:14px}
   .article img{height:240px}
-  .auth-btns{flex-direction:column;width:100%}
   .grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
-
-<canvas id="bg-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;"></canvas>
 
 <header>
   <div class="logo">GEN7PLAY</div>
@@ -361,19 +329,10 @@ footer span{color:var(--accent);font-weight:700}
       <button class="user-btn" id="userBtn">
         <div class="user-avatar" id="userAvatar">U</div>
         <span id="userName">Utilisateur</span>
-        <span style="font-size:12px">▼</span>
       </button>
 
       <div class="dropdown" id="userDropdown">
-        <div class="user-email" id="userEmailDisplay"></div>
-
-        <div class="section-title-menu">Navigation</div>
-        <a href="#home">Accueil</a>
-        <a href="#blog">Blog</a>
-        <a href="#contact">Contact</a>
-        <a href="https://whatsapp.com/channel/0029Vb99MNz2f3EPTXFQU411" target="_blank">Chaîne WhatsApp</a>
-
-        <div class="section-title-menu">Compte</div>
+        <div id="userEmailDisplay"></div>
         <button id="settingsBtn">Paramètres</button>
         <button id="logoutBtn">Déconnexion</button>
       </div>
@@ -382,17 +341,11 @@ footer span{color:var(--accent);font-weight:700}
 </header>
 
 <section class="hero" id="home">
-  <div class="hero-content">
-    <div class="tag">GEN7PLAY — GAMING & TECH COMMUNITY</div>
+  <div>
     <h1>LEVEL UP.<br><span>HAITI.</span></h1>
-    <p>
-      Gaming, technologie et communauté.
-      Découvre des conseils gaming, des astuces tech et du contenu pour progresser.
-    </p>
+    <p>Gaming, technologie et communauté. Découvre des conseils gaming, des astuces tech et du contenu pour progresser.</p>
     <a href="#blog" class="btn">Explorer GEN7PLAY →</a>
-    <a href="https://whatsapp.com/channel/0029Vb99MNz2f3EPTXFQU411" target="_blank" class="btn channel-btn">
-      Rejoins GEN7 OFFICIAL
-    </a>
+    <a href="https://whatsapp.com/channel/0029Vb99MNz2f3EPTXFQU411" target="_blank" class="btn channel-btn">Rejoins GEN7 OFFICIAL</a>
   </div>
 </section>
 
@@ -400,10 +353,14 @@ footer span{color:var(--accent);font-weight:700}
   <h2 class="section-title">💡 Blog Gaming & Tech</h2>
   <p class="section-sub">Conseils, astuces et connaissances pour les joueurs.</p>
 
+  <div class="search-box">
+    <input type="text" id="blogSearch" placeholder="Rechercher un article...">
+  </div>
+
   <div class="grid" id="blogList">
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=800&q=80" alt="Manette de jeu">
+      <img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=800&q=80" alt="Gaming">
       <div class="card-content">
         <div class="tag">GAMING</div>
         <h3>5 conseils pour progresser rapidement en gaming</h3>
@@ -413,7 +370,7 @@ footer span{color:var(--accent);font-weight:700}
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="Téléphone Android">
+      <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="Android">
       <div class="card-content">
         <div class="tag">TECH</div>
         <h3>Optimise ton Android pour le gaming</h3>
@@ -423,7 +380,7 @@ footer span{color:var(--accent);font-weight:700}
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Composants informatiques">
+      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Sécurité">
       <div class="card-content">
         <div class="tag">SÉCURITÉ</div>
         <h3>Protège tes comptes de jeu et tes données</h3>
@@ -453,7 +410,7 @@ footer span{color:var(--accent);font-weight:700}
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80" alt="Sensibilité Free Fire">
+      <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80" alt="Sensibilité">
       <div class="card-content">
         <div class="tag">FREE FIRE</div>
         <h3>Comment trouver ta meilleure sensibilité dans Free Fire</h3>
@@ -463,7 +420,7 @@ footer span{color:var(--accent);font-weight:700}
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=800&q=80" alt="Free Fire armes">
+      <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=800&q=80" alt="Armes">
       <div class="card-content">
         <div class="tag">FREE FIRE</div>
         <h3>Les meilleures armes selon ton style de jeu</h3>
@@ -473,7 +430,7 @@ footer span{color:var(--accent);font-weight:700}
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=800&q=80" alt="Dream League Soccer">
+      <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=800&q=80" alt="DLS">
       <div class="card-content">
         <div class="tag">DLS</div>
         <h3>DLS : construire une équipe équilibrée sans dépenser trop</h3>
@@ -483,7 +440,7 @@ footer span{color:var(--accent);font-weight:700}
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=800&q=80" alt="Football mobile">
+      <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=800&q=80" alt="Football">
       <div class="card-content">
         <div class="tag">DLS</div>
         <h3>7 astuces pour marquer plus facilement dans DLS</h3>
@@ -493,7 +450,7 @@ footer span{color:var(--accent);font-weight:700}
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=800&q=80" alt="Formation football">
+      <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=800&q=80" alt="Formation">
       <div class="card-content">
         <div class="tag">DLS</div>
         <h3>Les meilleures formations pour progresser en DLS</h3>
@@ -513,7 +470,7 @@ footer span{color:var(--accent);font-weight:700}
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=800&q=80" alt="eFootball équipe">
+      <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=800&q=80" alt="Dream Team">
       <div class="card-content">
         <div class="tag">EFOOTBALL</div>
         <h3>Comment créer une Dream Team forte dans eFootball</h3>
@@ -523,7 +480,7 @@ footer span{color:var(--accent);font-weight:700}
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&w=800&q=80" alt="eFootball tactique">
+      <img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&w=800&q=80" alt="Défense">
       <div class="card-content">
         <div class="tag">EFOOTBALL</div>
         <h3>eFootball : les bases d’une bonne défense</h3>
@@ -533,7 +490,7 @@ footer span{color:var(--accent);font-weight:700}
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80" alt="Optimisation Android">
+      <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80" alt="Android">
       <div class="card-content">
         <div class="tag">TECH</div>
         <h3>7 réglages Android pour mieux jouer à Free Fire et DLS</h3>
@@ -543,7 +500,7 @@ footer span{color:var(--accent);font-weight:700}
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80" alt="Cybersécurité gaming">
+      <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80" alt="Cybersécurité">
       <div class="card-content">
         <div class="tag">TECH</div>
         <h3>Évite les faux sites de diamants et de pièces dans les jeux</h3>
@@ -553,7 +510,7 @@ footer span{color:var(--accent);font-weight:700}
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=800&q=80" alt="Wi-Fi gaming">
+      <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=800&q=80" alt="Wi-Fi">
       <div class="card-content">
         <div class="tag">TECH</div>
         <h3>Wi‑Fi ou données mobiles : quelle connexion pour le gaming ?</h3>
@@ -563,7 +520,7 @@ footer span{color:var(--accent);font-weight:700}
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=800&q=80" alt="Batterie téléphone gaming">
+      <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=800&q=80" alt="Batterie">
       <div class="card-content">
         <div class="tag">TECH</div>
         <h3>Préserve la batterie de ton téléphone quand tu joues souvent</h3>
@@ -573,7 +530,7 @@ footer span{color:var(--accent);font-weight:700}
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Sécurité compte">
+      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Sécurité">
       <div class="card-content">
         <div class="tag">TECH</div>
         <h3>Sécurise ton compte Google, Facebook et tes jeux mobiles</h3>
@@ -588,33 +545,55 @@ footer span{color:var(--accent);font-weight:700}
     <img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=1200&q=80" alt="Gaming">
     <div class="tag">GAMING</div>
     <h2>5 conseils pour progresser rapidement en gaming</h2>
+
+    <div class="article-meta">
+      <span id="views-article1">👁️ 0 vues</span>
+    </div>
+
     <p>Progresser dans les jeux ne dépend pas seulement de la chance. Avec une bonne méthode, tu peux améliorer ta visée, tes réflexes, ta prise de décision et ta régularité.</p>
-    <h3>1. Entraîne-toi avec un objectif</h3>
-    <p>Ne joue pas seulement pour jouer. À chaque session, choisis un objectif précis : améliorer ta visée, mieux te déplacer, apprendre une carte ou réduire tes erreurs.</p>
-    <h3>2. Analyse tes défaites</h3>
-    <p>Après une partie difficile, demande-toi ce que tu aurais pu faire autrement. Une mauvaise position, une précipitation ou un mauvais choix d’arme peuvent souvent être corrigés.</p>
-    <h3>3. Maîtrise peu de choses à la fois</h3>
-    <p>Il vaut mieux devenir très bon avec deux ou trois armes, personnages ou stratégies que d’essayer de tout maîtriser en même temps.</p>
-    <h3>4. Joue avec régularité</h3>
-    <p>Des sessions courtes mais régulières sont souvent plus efficaces que de longues sessions sans concentration. Ton cerveau apprend mieux avec la répétition.</p>
-    <h3>5. Reste calme</h3>
-    <p>La frustration fait prendre de mauvaises décisions. Fais une pause après plusieurs défaites, puis reviens avec un objectif clair.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="5 conseils pour progresser rapidement en gaming">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article1">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article1"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article2">
-    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" alt="Android gaming">
+    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" alt="Android">
     <div class="tag">TECH</div>
     <h2>Optimise ton Android pour le gaming</h2>
+
+    <div class="article-meta">
+      <span id="views-article2">👁️ 0 vues</span>
+    </div>
+
     <p>Un téléphone Android peut devenir plus fluide pour les jeux si tu réduis les applications inutiles, la surchauffe et la consommation en arrière-plan.</p>
-    <h3>Ferme les applications inutiles</h3>
-    <p>Avant de jouer, ferme les applications lourdes comme les réseaux sociaux, les navigateurs avec beaucoup d’onglets et les applications de téléchargement.</p>
-    <h3>Active le mode jeu</h3>
-    <p>Beaucoup de téléphones proposent un mode jeu ou une optimisation des performances. Il peut réduire les notifications et donner la priorité au jeu.</p>
-    <h3>Libère de l’espace</h3>
-    <p>Garde au moins quelques gigaoctets libres. Un téléphone trop rempli peut ralentir, chauffer davantage et avoir du mal à charger les ressources du jeu.</p>
-    <h3>Évite de jouer en chargeant</h3>
-    <p>Jouer pendant la charge peut faire monter la température. La surchauffe réduit souvent les performances et peut affecter la batterie à long terme.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="Optimise ton Android pour le gaming">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article2">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article2"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
@@ -622,15 +601,27 @@ footer span{color:var(--accent);font-weight:700}
     <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80" alt="Sécurité">
     <div class="tag">SÉCURITÉ</div>
     <h2>Protège tes comptes de jeu et tes données</h2>
+
+    <div class="article-meta">
+      <span id="views-article3">👁️ 0 vues</span>
+    </div>
+
     <p>Ton compte de jeu peut contenir des années de progression, des achats et des informations personnelles. Le protéger doit être une priorité.</p>
-    <h3>Utilise un mot de passe unique</h3>
-    <p>Ne réutilise jamais le même mot de passe sur plusieurs sites. Si un site est piraté, tes autres comptes restent protégés.</p>
-    <h3>Active la double authentification</h3>
-    <p>La double authentification ajoute une étape de vérification lors de la connexion. Même si quelqu’un connaît ton mot de passe, il ne pourra pas entrer facilement.</p>
-    <h3>Ne partage jamais ton code</h3>
-    <p>Aucun administrateur, support officiel ou créateur de contenu ne devrait te demander ton mot de passe ou un code de vérification.</p>
-    <h3>Méfie-toi des liens étranges</h3>
-    <p>Ne clique pas sur les liens reçus par message, commentaire ou groupe si tu ne connais pas la source. Vérifie toujours l’adresse officielle du site.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="Protège tes comptes de jeu et tes données">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article3">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article3"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
@@ -638,27 +629,27 @@ footer span{color:var(--accent);font-weight:700}
     <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80" alt="Battle Royale">
     <div class="tag">FREE FIRE</div>
     <h2>10 conseils pour survivre plus longtemps en Battle Royale</h2>
+
+    <div class="article-meta">
+      <span id="views-article4">👁️ 0 vues</span>
+    </div>
+
     <p>Survivre en Battle Royale demande de la patience, une bonne lecture de la zone et des décisions intelligentes.</p>
-    <h3>Choisis un bon atterrissage</h3>
-    <p>Si tu veux progresser régulièrement, atterris dans des zones moins fréquentées. Tu auras plus de temps pour trouver du loot sans combat immédiat.</p>
-    <h3>Loot rapidement</h3>
-    <p>Trouve vite une arme, un gilet, un casque et des munitions. Ne reste pas trop longtemps au même endroit après avoir récupéré l’essentiel.</p>
-    <h3>Suis la zone</h3>
-    <p>Ne attends pas la dernière seconde pour bouger. Se déplacer tôt te permet de choisir une meilleure position.</p>
-    <h3>Écoute les bruits</h3>
-    <p>Les pas, les tirs et les véhicules donnent des informations importantes. Utilise un casque si possible.</p>
-    <h3>Évite les combats inutiles</h3>
-    <p>Tuer n’est pas toujours la meilleure décision. Parfois, rester discret et atteindre le top 5 est plus rentable.</p>
-    <h3>Utilise le terrain</h3>
-    <p>Les rochers, murs, arbres et bâtiments peuvent te protéger. Ne cours pas en ligne droite en terrain ouvert.</p>
-    <h3>Garde des soins</h3>
-    <p>Ne dépense pas tous tes soins trop vite. Garde toujours de quoi te soigner en fin de partie.</p>
-    <h3>Joue avec ton équipe</h3>
-    <p>En squad, reste proche de tes coéquipiers. Un joueur isolé est beaucoup plus facile à éliminer.</p>
-    <h3>Observe avant d’attaquer</h3>
-    <p>Regarde la position des ennemis, leur nombre et leur couverture avant de tirer.</p>
-    <h3>Garde ton calme en final</h3>
-    <p>Dans les dernières zones, la patience gagne souvent contre l’agressivité. Laisse les autres équipes se combattre quand c’est possible.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="10 conseils pour survivre plus longtemps en Battle Royale">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article4">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article4"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
@@ -666,17 +657,27 @@ footer span{color:var(--accent);font-weight:700}
     <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=1200&q=80" alt="Clash Squad">
     <div class="tag">FREE FIRE</div>
     <h2>Clash Squad : comment gagner plus de rounds</h2>
+
+    <div class="article-meta">
+      <span id="views-article5">👁️ 0 vues</span>
+    </div>
+
     <p>Clash Squad récompense la coordination, la gestion économique et les bonnes positions plus que la chance.</p>
-    <h3>Communique avec ton équipe</h3>
-    <p>Indique où sont les ennemis, combien ils sont et quelle zone ils contrôlent. Une bonne information peut changer le résultat d’un round.</p>
-    <h3>Gère ton argent</h3>
-    <p>N’achète pas tout au premier round. Garde parfois de l’argent pour un gilet, un casque ou une meilleure arme au round suivant.</p>
-    <h3>Contrôle les angles</h3>
-    <p>Ne traverse pas une zone ouverte sans vérifier les angles. Avance avec ton équipe et utilise les murs comme protection.</p>
-    <h3>Joue ensemble</h3>
-    <p>Un joueur qui attaque seul est facile à éliminer. Avancez en groupe, mais sans être trop serrés pour éviter les grenades.</p>
-    <h3>Adapte tes armes</h3>
-    <p>Choisis une arme selon la distance du combat. Une arme polyvalente est souvent un bon choix si tu ne connais pas encore la map.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="Clash Squad : comment gagner plus de rounds">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article5">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article5"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
@@ -684,17 +685,27 @@ footer span{color:var(--accent);font-weight:700}
     <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80" alt="Sensibilité">
     <div class="tag">FREE FIRE</div>
     <h2>Comment trouver ta meilleure sensibilité dans Free Fire</h2>
+
+    <div class="article-meta">
+      <span id="views-article6">👁️ 0 vues</span>
+    </div>
+
     <p>La meilleure sensibilité n’est pas la même pour tout le monde. Elle dépend de ton téléphone, de ta taille d’écran et de ton style de jeu.</p>
-    <h3>Commence par des réglages moyens</h3>
-    <p>Ne copie pas directement la sensibilité d’un autre joueur. Commence avec des valeurs moyennes, puis ajuste progressivement.</p>
-    <h3>Teste en entraînement</h3>
-    <p>Va dans la salle d’entraînement et teste les mouvements de visée, les tirs à distance et les déplacements rapides.</p>
-    <h3>Ajuste la visée générale</h3>
-    <p>Si ton viseur bouge trop vite, baisse légèrement la sensibilité. Si tu as du mal à suivre un ennemi, augmente-la un peu.</p>
-    <h3>Teste la visée en tirant</h3>
-    <p>Tire sur une cible éloignée et observe si ton réticule monte trop. Ajuste jusqu’à ce que tes tirs restent plus stables.</p>
-    <h3>Ne change pas tout chaque jour</h3>
-    <p>Donne-toi quelques jours avec les mêmes réglages. Changer sans arrêt empêche ton cerveau de s’habituer.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="Comment trouver ta meilleure sensibilité dans Free Fire">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article6">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article6"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
@@ -702,69 +713,111 @@ footer span{color:var(--accent);font-weight:700}
     <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1200&q=80" alt="Armes">
     <div class="tag">FREE FIRE</div>
     <h2>Les meilleures armes selon ton style de jeu</h2>
+
+    <div class="article-meta">
+      <span id="views-article7">👁️ 0 vues</span>
+    </div>
+
     <p>Il n’existe pas une seule « meilleure arme ». Le bon choix dépend de ta distance de combat, de ta précision et de ta façon d’avancer.</p>
-    <h3>Pour le combat rapproché</h3>
-    <p>Les fusils à pompe et les SMG sont efficaces dans les bâtiments et les espaces réduits. Ils demandent une bonne position et de la réactivité.</p>
-    <h3>Pour la moyenne distance</h3>
-    <p>Les fusils d’assaut sont souvent polyvalents. Ils permettent de combattre à moyenne distance tout en restant utiles dans les échanges rapides.</p>
-    <h3>Pour la longue distance</h3>
-    <p>Les fusils de précision peuvent être très forts, mais ils demandent une bonne position, de la patience et une excellente visée.</p>
-    <h3>Choisis selon ta map</h3>
-    <p>Dans une zone avec beaucoup de bâtiments, privilégie une arme rapide. Dans une zone ouverte, une arme plus précise peut être meilleure.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="Les meilleures armes selon ton style de jeu">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article7">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article7"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article8">
-    <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1200&q=80" alt="Dream League Soccer">
+    <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1200&q=80" alt="DLS">
     <div class="tag">DLS</div>
     <h2>DLS : construire une équipe équilibrée sans dépenser trop</h2>
+
+    <div class="article-meta">
+      <span id="views-article8">👁️ 0 vues</span>
+    </div>
+
     <p>Une bonne équipe dans Dream League Soccer ne dépend pas uniquement des joueurs les plus chers. L’équilibre entre défense, milieu et attaque compte beaucoup.</p>
-    <h3>Commence par la défense</h3>
-    <p>Des défenseurs rapides et solides te permettront de concéder moins de buts. Une bonne défense rend les matchs plus faciles.</p>
-    <h3>Choisis un milieu créatif</h3>
-    <p>Un milieu capable de passer, récupérer le ballon et lancer les attaques rend ton équipe plus fluide.</p>
-    <h3>Ne néglige pas les remplaçants</h3>
-    <p>Des remplaçants corrects te permettent de gérer la fatigue et les blessures sans casser la qualité de ton équipe.</p>
-    <h3>Améliore progressivement</h3>
-    <p>Ne dépense pas tout d’un coup. Améliore d’abord les postes qui te posent le plus de problèmes pendant les matchs.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="DLS : construire une équipe équilibrée sans dépenser trop">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article8">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article8"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article9">
-    <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80" alt="Football mobile">
+    <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80" alt="Football">
     <div class="tag">DLS</div>
     <h2>7 astuces pour marquer plus facilement dans DLS</h2>
+
+    <div class="article-meta">
+      <span id="views-article9">👁️ 0 vues</span>
+    </div>
+
     <p>Marquer régulièrement demande du timing, de la patience et une meilleure lecture des espaces.</p>
-    <h3>1. Attends le bon angle</h3>
-    <p>Ne tire pas dès que tu vois le but. Approche-toi, ajuste ton angle et choisis le bon moment.</p>
-    <h3>2. Utilise les passes</h3>
-    <p>Une passe rapide peut créer un espace qu’un dribble seul ne créerait pas.</p>
-    <h3>3. Varie tes frappes</h3>
-    <p>Alterne entre frappes puissantes, frappes placées et tirs après contrôle. Cela rend ton attaque moins prévisible.</p>
-    <h3>4. Exploite les contre-attaques</h3>
-    <p>Quand l’adversaire monte beaucoup, cherche rapidement tes attaquants dans les espaces libres.</p>
-    <h3>5. Surveille le gardien</h3>
-    <p>Observe la position du gardien avant de tirer. Parfois, une petite feinte ou une passe suffit.</p>
-    <h3>6. Joue sur les ailes</h3>
-    <p>Les centres et les débordements peuvent créer de bonnes occasions, surtout si tu as des attaquants rapides.</p>
-    <h3>7. Reste patient</h3>
-    <p>Forcer une frappe depuis une mauvaise position donne souvent le ballon à l’adversaire. Attends une meilleure occasion.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="7 astuces pour marquer plus facilement dans DLS">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article9">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article9"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article10">
-    <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=80" alt="Formation football">
+    <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=80" alt="Formation">
     <div class="tag">DLS</div>
     <h2>Les meilleures formations pour progresser en DLS</h2>
+
+    <div class="article-meta">
+      <span id="views-article10">👁️ 0 vues</span>
+    </div>
+
     <p>La meilleure formation dépend de tes joueurs, de ton style et de la façon dont ton adversaire joue.</p>
-    <h3>4-3-3 pour l’attaque</h3>
-    <p>Cette formation offre beaucoup d’options offensives. Elle est utile si tu as des ailiers rapides et un bon milieu de terrain.</p>
-    <h3>4-4-2 pour l’équilibre</h3>
-    <p>C’est une formation simple et solide. Elle convient bien si tu veux défendre proprement tout en gardant des occasions.</p>
-    <h3>3-5-2 pour le contrôle</h3>
-    <p>Cette formation peut dominer le milieu, mais elle demande des défenseurs fiables et une bonne gestion des espaces.</p>
-    <h3>Adapte-toi pendant le match</h3>
-    <p>Si tu mènes, tu peux renforcer ta défense. Si tu perds, augmente ta pression et cherche plus de solutions offensives.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="Les meilleures formations pour progresser en DLS">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article10">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article10"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
@@ -772,23 +825,27 @@ footer span{color:var(--accent);font-weight:700}
     <img src="https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1200&q=80" alt="eFootball">
     <div class="tag">EFOOTBALL</div>
     <h2>eFootball : 8 conseils pour mieux contrôler le ballon</h2>
+
+    <div class="article-meta">
+      <span id="views-article11">👁️ 0 vues</span>
+    </div>
+
     <p>Le contrôle du ballon est l’une des bases les plus importantes dans eFootball. Il te permet de garder le rythme et de créer des occasions.</p>
-    <h3>1. Ralentis quand il le faut</h3>
-    <p>Tous les attaques ne doivent pas être rapides. Parfois, garder le ballon et attendre une ouverture est plus efficace.</p>
-    <h3>2. Utilise les passes courtes</h3>
-    <p>Les passes courtes réduisent les pertes de balle et permettent de faire avancer l’équipe progressivement.</p>
-    <h3>3. Regarde avant de recevoir</h3>
-    <p>Anticipe la position de tes coéquipiers avant même de recevoir le ballon.</p>
-    <h3>4. Protège le ballon</h3>
-    <p>Utilise ton corps pour protéger le ballon quand un défenseur est proche.</p>
-    <h3>5. Dribble avec intention</h3>
-    <p>Ne dribble pas seulement pour dribbler. Chaque mouvement doit te rapprocher du but ou créer un espace.</p>
-    <h3>6. Change de rythme</h3>
-    <p>Alterne entre accélérations et ralentissements pour déstabiliser la défense adverse.</p>
-    <h3>7. Utilise les ailes</h3>
-    <p>Les ailiers peuvent créer de la largeur et attirer les défenseurs vers l’extérieur.</p>
-    <h3>8. Entraîne-toi régulièrement</h3>
-    <p>Le contrôle s’améliore avec la répétition. Joue quelques matchs d’entraînement pour développer tes réflexes.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="eFootball : 8 conseils pour mieux contrôler le ballon">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article11">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article11"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
@@ -796,53 +853,83 @@ footer span{color:var(--accent);font-weight:700}
     <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=1200&q=80" alt="Dream Team">
     <div class="tag">EFOOTBALL</div>
     <h2>Comment créer une Dream Team forte dans eFootball</h2>
+
+    <div class="article-meta">
+      <span id="views-article12">👁️ 0 vues</span>
+    </div>
+
     <p>Une bonne Dream Team n’est pas seulement une équipe avec les meilleurs joueurs. C’est une équipe dont les profils se complètent.</p>
-    <h3>Choisis un style clair</h3>
-    <p>Décide si tu veux jouer en possession, en contre-attaque ou avec une pression élevée. Tes joueurs doivent correspondre à ce style.</p>
-    <h3>Équilibre les postes</h3>
-    <p>Ne mets pas toutes tes ressources dans l’attaque. Une défense faible rendra tes matchs beaucoup plus difficiles.</p>
-    <h3>Regarde les compétences</h3>
-    <p>La vitesse, la passe, le tir, la défense et le physique sont importants selon le poste. Choisis les joueurs selon leur rôle.</p>
-    <h3>Développe intelligemment</h3>
-    <p>Améliore d’abord les joueurs que tu utilises le plus souvent. Ne disperse pas tes ressources sur toute l’équipe.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="Comment créer une Dream Team forte dans eFootball">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article12">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article12"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article13">
-    <img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&w=1200&q=80" alt="Défense eFootball">
+    <img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&w=1200&q=80" alt="Défense">
     <div class="tag">EFOOTBALL</div>
     <h2>eFootball : les bases d’une bonne défense</h2>
+
+    <div class="article-meta">
+      <span id="views-article13">👁️ 0 vues</span>
+    </div>
+
     <p>Une bonne défense ne consiste pas à courir partout. Elle repose sur la patience, la position et la lecture du jeu.</p>
-    <h3>Ne sortez pas tous</h3>
-    <p>Si plusieurs défenseurs quittent leur position en même temps, tu laisses des espaces dangereux derrière toi.</p>
-    <h3>Anticipe les passes</h3>
-    <p>Observe les trajectoires de passe. Placer ton joueur entre deux adversaires peut couper une attaque avant qu’elle devienne dangereuse.</p>
-    <h3>Utilise le pressing avec mesure</h3>
-    <p>Presser sans arrêt fatigue ton équipe et crée des espaces. Presse au bon moment, surtout près de ton but.</p>
-    <h3>Défends en équipe</h3>
-    <p>Le milieu doit aider la défense. Si tes milieux ne reviennent pas, tes défenseurs seront souvent isolés.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="eFootball : les bases d’une bonne défense">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article13">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article13"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article14">
-    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80" alt="Optimisation Android">
+    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80" alt="Android">
     <div class="tag">TECH</div>
     <h2>7 réglages Android pour mieux jouer à Free Fire et DLS</h2>
+
+    <div class="article-meta">
+      <span id="views-article14">👁️ 0 vues</span>
+    </div>
+
     <p>Quelques réglages simples peuvent améliorer la fluidité de tes jeux mobiles et réduire les coupures.</p>
-    <h3>1. Active le mode jeu</h3>
-    <p>S’il est disponible, active-le avant de lancer une partie.</p>
-    <h3>2. Ferme les applications</h3>
-    <p>Ferme les applications récentes avant de jouer pour libérer de la mémoire.</p>
-    <h3>3. Désactive les notifications</h3>
-    <p>Les notifications peuvent faire perdre le focus pendant un match important.</p>
-    <h3>4. Baisse la qualité graphique</h3>
-    <p>Si ton téléphone chauffe ou ralentit, choisis des graphismes plus stables plutôt que la qualité maximale.</p>
-    <h3>5. Désactive les animations</h3>
-    <p>Réduire les animations système peut rendre l’interface plus réactive sur certains téléphones.</p>
-    <h3>6. Garde de l’espace libre</h3>
-    <p>Un stockage presque plein peut ralentir le téléphone et les jeux.</p>
-    <h3>7. Redémarre parfois le téléphone</h3>
-    <p>Un redémarrage peut fermer des processus bloqués et améliorer temporairement les performances.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="7 réglages Android pour mieux jouer à Free Fire et DLS">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article14">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article14"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
@@ -850,31 +937,55 @@ footer span{color:var(--accent);font-weight:700}
     <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80" alt="Cybersécurité">
     <div class="tag">TECH</div>
     <h2>Évite les faux sites de diamants et de pièces dans les jeux</h2>
+
+    <div class="article-meta">
+      <span id="views-article15">👁️ 0 vues</span>
+    </div>
+
     <p>Les arnaques ciblent souvent les joueurs qui cherchent des diamants, pièces ou comptes gratuits. Apprendre à les reconnaître peut te protéger.</p>
-    <h3>Méfie-toi des promesses trop belles</h3>
-    <p>Un site qui promet des milliers de diamants gratuitement demande généralement quelque chose en échange : ton compte, ton mot de passe ou un paiement.</p>
-    <h3>Vérifie l’adresse du site</h3>
-    <p>Les faux sites imitent souvent les vrais noms. Vérifie l’orthographe exacte de l’adresse avant de te connecter.</p>
-    <h3>Ne donne jamais ton mot de passe</h3>
-    <p>Aucun site légitime n’a besoin de ton mot de passe pour offrir une récompense.</p>
-    <h3>Utilise les boutiques officielles</h3>
-    <p>Pour les achats, passe par la boutique du jeu, Google Play ou l’App Store selon la plateforme.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="Évite les faux sites de diamants et de pièces dans les jeux">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article15">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article15"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article16">
-    <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=1200&q=80" alt="Wi-Fi gaming">
+    <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=1200&q=80" alt="Wi-Fi">
     <div class="tag">TECH</div>
     <h2>Wi‑Fi ou données mobiles : quelle connexion pour le gaming ?</h2>
+
+    <div class="article-meta">
+      <span id="views-article16">👁️ 0 vues</span>
+    </div>
+
     <p>Pour les jeux en ligne, la stabilité est souvent plus importante que la vitesse maximale.</p>
-    <h3>Privilégie un Wi‑Fi stable</h3>
-    <p>Un Wi‑Fi proche du routeur est généralement plus stable que les données mobiles, surtout pour les parties compétitives.</p>
-    <h3>Évite les obstacles</h3>
-    <p>Les murs, les appareils électroniques et la distance peuvent affaiblir le signal Wi‑Fi.</p>
-    <h3>Vérifie la latence</h3>
-    <p>Une connexion rapide ne garantit pas une faible latence. Pour le gaming, une connexion stable avec peu de retard est meilleure.</p>
-    <h3>Évite les téléchargements</h3>
-    <p>Ne lance pas de gros téléchargements pendant une partie. Cela peut augmenter le lag et les coupures.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="Wi‑Fi ou données mobiles : quelle connexion pour le gaming ?">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article16">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article16"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
@@ -882,31 +993,55 @@ footer span{color:var(--accent);font-weight:700}
     <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1200&q=80" alt="Batterie">
     <div class="tag">TECH</div>
     <h2>Préserve la batterie de ton téléphone quand tu joues souvent</h2>
+
+    <div class="article-meta">
+      <span id="views-article17">👁️ 0 vues</span>
+    </div>
+
     <p>Les jeux mobiles consomment beaucoup d’énergie. Quelques habitudes peuvent réduire la surchauffe et préserver ta batterie.</p>
-    <h3>Évite la chaleur</h3>
-    <p>Ne joue pas longtemps sous le soleil ou dans un endroit très chaud. La chaleur accélère la dégradation de la batterie.</p>
-    <h3>Retire la coque si le téléphone chauffe</h3>
-    <p>Une coque peut retenir la chaleur. Si ton téléphone devient très chaud, retire-la pendant la partie.</p>
-    <h3>Ne joue pas toujours en chargeant</h3>
-    <p>Jouer en chargeant augmente la température. Si tu dois le faire, utilise un chargeur adapté et surveille la chaleur.</p>
-    <h3>Réduis la luminosité</h3>
-    <p>Une luminosité trop élevée consomme beaucoup d’énergie. Ajuste-la selon ton environnement.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="Préserve la batterie de ton téléphone quand tu joues souvent">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article17">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article17"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
   <article class="article" id="article18">
-    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80" alt="Sécurité compte">
+    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80" alt="Sécurité">
     <div class="tag">TECH</div>
     <h2>Sécurise ton compte Google, Facebook et tes jeux mobiles</h2>
+
+    <div class="article-meta">
+      <span id="views-article18">👁️ 0 vues</span>
+    </div>
+
     <p>Tes comptes Google et Facebook peuvent être liés à tes jeux. Les sécuriser protège aussi ta progression et tes achats.</p>
-    <h3>Active la vérification en deux étapes</h3>
-    <p>Ajoute une seconde protection à tes comptes principaux. Cela réduit fortement le risque de piratage.</p>
-    <h3>Utilise des mots de passe différents</h3>
-    <p>Chaque compte important doit avoir son propre mot de passe. Utilise un gestionnaire de mots de passe si nécessaire.</p>
-    <h3>Vérifie les appareils connectés</h3>
-    <p>Dans les paramètres de sécurité, vérifie régulièrement les appareils et applications autorisés. Déconnecte ceux que tu ne reconnais pas.</p>
-    <h3>Garde tes informations de récupération</h3>
-    <p>Ajoute un email de récupération et un numéro de téléphone à jour. Cela peut t’aider à récupérer ton compte en cas de problème.</p>
+
+    <div class="article-actions">
+      <button class="share-btn" data-title="Sécurise ton compte Google, Facebook et tes jeux mobiles">🔗 Partager</button>
+    </div>
+
+    <div class="comments-section">
+      <h3>💬 Commentaires</h3>
+      <form class="comment-form" data-article="article18">
+        <input type="text" class="comment-name" placeholder="Ton nom" required>
+        <textarea class="comment-text" placeholder="Écris ton commentaire..." required></textarea>
+        <button type="submit" class="btn">Publier</button>
+      </form>
+      <div class="comments-list" id="comments-article18"></div>
+    </div>
+
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
@@ -918,22 +1053,22 @@ footer span{color:var(--accent);font-weight:700}
 
   <form class="contact-form" id="contactForm">
     <div class="form-group">
-      <label for="name">Nom</label>
+      <label>Nom</label>
       <input type="text" id="name" name="from_name" required>
     </div>
 
     <div class="form-group">
-      <label for="email">Email</label>
+      <label>Email</label>
       <input type="email" id="email" name="from_email" required>
     </div>
 
     <div class="form-group">
-      <label for="subject">Sujet</label>
+      <label>Sujet</label>
       <input type="text" id="subject" name="subject" required>
     </div>
 
     <div class="form-group">
-      <label for="message">Message</label>
+      <label>Message</label>
       <textarea id="message" name="message" required></textarea>
     </div>
 
@@ -944,44 +1079,11 @@ footer span{color:var(--accent);font-weight:700}
 
 <footer>
   <p>© 2026 <span>GEN7PLAY</span> — Gaming & Tech Community</p>
-  <p style="margin-top:10px">Gaming • Technology • Community</p>
-  <p style="margin-top:15px">
-    <a href="https://whatsapp.com/channel/0029Vb99MNz2f3EPTXFQU411" target="_blank" style="color:var(--accent);text-decoration:none">
-      Follow the GEN7 OFFICIAL channel on WhatsApp
-    </a>
-  </p>
 </footer>
-
-<div class="modal" id="settingsModal">
-  <div class="modal-content">
-    <button class="modal-close" id="closeSettings">&times;</button>
-    <h3 style="margin-bottom:20px;color:var(--accent)">Paramètres du compte</h3>
-
-    <div class="form-group">
-      <label>Email</label>
-      <input type="text" id="settingsEmail" readonly style="opacity:0.7">
-    </div>
-
-    <form id="changePasswordForm">
-      <div class="form-group">
-        <label>Nouveau mot de passe</label>
-        <input type="password" id="newPassword" minlength="6" required placeholder="Min. 6 caractères">
-      </div>
-
-      <div class="form-group">
-        <label>Confirmer le nouveau mot de passe</label>
-        <input type="password" id="confirmPassword" minlength="6" required>
-      </div>
-
-      <button type="submit" class="btn" style="width:100%">Changer le mot de passe</button>
-      <div id="passwordStatus"></div>
-    </form>
-  </div>
-</div>
 
 <div class="modal" id="authModal">
   <div class="modal-content">
-    <button class="modal-close" id="closeModal">&times;</button>
+    <button id="closeModal">&times;</button>
 
     <div class="tabs">
       <button class="tab active" data-tab="login">Connexion</button>
@@ -994,13 +1096,11 @@ footer span{color:var(--accent);font-weight:700}
         <label>Email</label>
         <input type="email" id="loginEmail" required>
       </div>
-
       <div class="form-group">
         <label>Mot de passe</label>
         <input type="password" id="loginPassword" required>
       </div>
-
-      <button type="submit" class="btn" style="width:100%">Se connecter</button>
+      <button type="submit" class="btn">Se connecter</button>
       <div id="loginStatus" class="error"></div>
     </form>
 
@@ -1009,13 +1109,11 @@ footer span{color:var(--accent);font-weight:700}
         <label>Email</label>
         <input type="email" id="signupEmail" required>
       </div>
-
       <div class="form-group">
-        <label>Mot de passe (min. 6 caractères)</label>
+        <label>Mot de passe</label>
         <input type="password" id="signupPassword" required minlength="6">
       </div>
-
-      <button type="submit" class="btn" style="width:100%">Créer un compte</button>
+      <button type="submit" class="btn">Créer un compte</button>
       <div id="signupStatus" class="error"></div>
     </form>
 
@@ -1024,275 +1122,399 @@ footer span{color:var(--accent);font-weight:700}
         <label>Email</label>
         <input type="email" id="forgotEmail" required>
       </div>
-
-      <button type="submit" class="btn" style="width:100%">Envoyer le lien de réinitialisation</button>
+      <button type="submit" class="btn">Envoyer le lien</button>
       <div id="forgotStatus" class="error"></div>
     </form>
   </div>
 </div>
 
-<!-- EmailJS SDK : doit être AVANT le script module -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-<!-- Firebase + EmailJS -->
 <script type="module">
-  const firebaseConfig = {
-    apiKey: "AIzaSyCCxk_WCdI6TrrwpfSB8DLaw5q1ABam8uQ",
-    authDomain: "gen7play.firebaseapp.com",
-    projectId: "gen7play",
-    storageBucket: "gen7play.firebasestorage.app",
-    messagingSenderId: "587301493803",
-    appId: "1:587301493803:web:6cd5637275e79e86aede6e",
-    measurementId: "G-NGD2G21DTT"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyCCxk_WCdI6TrrwpfSB8DLaw5q1ABam8uQ",
+  authDomain: "gen7play.firebaseapp.com",
+  projectId: "gen7play",
+  storageBucket: "gen7play.firebasestorage.app",
+  messagingSenderId: "587301493803",
+  appId: "1:587301493803:web:6cd5637275e79e86aede6e"
+};
 
-  const EMAILJS_SERVICE_ID = "service_6il606m";
-  const EMAILJS_TEMPLATE_ID = "template_6ct0vtu";
-  const EMAILJS_PUBLIC_KEY = "XefhWux4HWPFGgnB1";
+const EMAILJS_SERVICE_ID = "service_6il606m";
+const EMAILJS_TEMPLATE_ID = "template_6ct0vtu";
+const EMAILJS_PUBLIC_KEY = "XefhWux4HWPFGgnB1";
 
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-  import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut,
-    onAuthStateChanged,
-    sendPasswordResetEmail,
-    updatePassword
-  } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  increment,
+  collection,
+  addDoc,
+  query,
+  where,
+  orderBy,
+  onSnapshot,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-  const authBtns = document.getElementById("authBtns");
-  const userMenu = document.getElementById("userMenu");
-  const userBtn = document.getElementById("userBtn");
-  const userDropdown = document.getElementById("userDropdown");
-  const userAvatar = document.getElementById("userAvatar");
-  const userName = document.getElementById("userName");
-  const userEmailDisplay = document.getElementById("userEmailDisplay");
-  const loginBtn = document.getElementById("loginBtn");
-  const signupBtn = document.getElementById("signupBtn");
-  const modal = document.getElementById("authModal");
-  const closeModal = document.getElementById("closeModal");
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-  userBtn.onclick = (e) => {
-    e.stopPropagation();
-    userDropdown.classList.toggle("active");
-  };
+const authBtns = document.getElementById("authBtns");
+const userMenu = document.getElementById("userMenu");
+const userDropdown = document.getElementById("userDropdown");
+const modal = document.getElementById("authModal");
 
-  document.addEventListener("click", () => {
-    userDropdown.classList.remove("active");
-  });
+document.getElementById("userBtn").onclick = (e) => {
+  e.stopPropagation();
+  userDropdown.classList.toggle("active");
+};
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      authBtns.style.display = "none";
-      userMenu.style.display = "flex";
+document.addEventListener("click", () => {
+  userDropdown.classList.remove("active");
+});
 
-      const email = user.email || "Utilisateur";
-      userEmailDisplay.textContent = email;
-      userName.textContent = email.split("@")[0];
-      userAvatar.textContent = email.charAt(0).toUpperCase();
+onAuthStateChanged(auth, (user) => {
+  if(user){
+    authBtns.style.display = "none";
+    userMenu.style.display = "flex";
+    document.getElementById("userEmailDisplay").textContent = user.email;
+    document.getElementById("userName").textContent = user.email.split("@")[0];
+    document.getElementById("userAvatar").textContent = user.email.charAt(0).toUpperCase();
 
-      document.getElementById("logoutBtn").onclick = async () => {
-        await signOut(auth);
-        userDropdown.classList.remove("active");
-      };
+    document.getElementById("logoutBtn").onclick = async () => {
+      await signOut(auth);
+    };
 
-      const settingsBtn = document.getElementById("settingsBtn");
-      const settingsModal = document.getElementById("settingsModal");
-      const closeSettings = document.getElementById("closeSettings");
-      const settingsEmail = document.getElementById("settingsEmail");
-
-      settingsBtn.onclick = () => {
-        settingsEmail.value = user.email || "";
-        settingsModal.classList.add("active");
-        userDropdown.classList.remove("active");
-      };
-
-      closeSettings.onclick = () => settingsModal.classList.remove("active");
-
-      settingsModal.onclick = (e) => {
-        if (e.target === settingsModal) settingsModal.classList.remove("active");
-      };
-
-      document.getElementById("changePasswordForm").onsubmit = async (e) => {
-        e.preventDefault();
-
-        const newPass = document.getElementById("newPassword").value;
-        const confirmPass = document.getElementById("confirmPassword").value;
-        const status = document.getElementById("passwordStatus");
-
-        if (newPass !== confirmPass) {
-          status.className = "error";
-          status.textContent = "Les mots de passe ne correspondent pas.";
-          return;
-        }
-
-        try {
-          await updatePassword(user, newPass);
-          status.className = "success";
-          status.textContent = "Mot de passe mis à jour avec succès !";
-          document.getElementById("changePasswordForm").reset();
-        } catch (err) {
-          status.className = "error";
-          status.textContent = err.code === "auth/requires-recent-login"
-            ? "Reconnecte-toi pour changer le mot de passe."
-            : "Erreur : " + err.message;
-        }
-      };
-    } else {
-      authBtns.style.display = "flex";
-      userMenu.style.display = "none";
+    document.getElementById("settingsBtn").onclick = () => {
       userDropdown.classList.remove("active");
-    }
-  });
-
-  loginBtn.onclick = () => {
-    modal.classList.add("active");
-    showTab("login");
-  };
-
-  signupBtn.onclick = () => {
-    modal.classList.add("active");
-    showTab("signup");
-  };
-
-  closeModal.onclick = () => modal.classList.remove("active");
-
-  modal.onclick = (e) => {
-    if (e.target === modal) modal.classList.remove("active");
-  };
-
-  function showTab(tab) {
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    document.querySelector(`[data-tab="${tab}"]`).classList.add("active");
-
-    document.getElementById("loginForm").style.display = tab === "login" ? "block" : "none";
-    document.getElementById("signupForm").style.display = tab === "signup" ? "block" : "none";
-    document.getElementById("forgotForm").style.display = tab === "forgot" ? "block" : "none";
+    };
+  } else {
+    authBtns.style.display = "flex";
+    userMenu.style.display = "none";
   }
+});
 
-  document.querySelectorAll(".tab").forEach(tab => {
-    tab.onclick = () => showTab(tab.dataset.tab);
-  });
+document.getElementById("loginBtn").onclick = () => {
+  modal.classList.add("active");
+  showTab("login");
+};
 
-  document.getElementById("loginForm").onsubmit = async (e) => {
-    e.preventDefault();
+document.getElementById("signupBtn").onclick = () => {
+  modal.classList.add("active");
+  showTab("signup");
+};
 
-    const email = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
-    const status = document.getElementById("loginStatus");
+document.getElementById("closeModal").onclick = () => {
+  modal.classList.remove("active");
+};
 
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      status.className = "success";
-      status.textContent = "Connexion réussie !";
-      setTimeout(() => modal.classList.remove("active"), 1000);
-    } catch (err) {
-      status.className = "error";
-      status.textContent = err.code === "auth/wrong-password"
-        ? "Mot de passe incorrect"
-        : "Erreur : " + err.message;
-    }
-  };
+function showTab(tab){
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  document.querySelector(`[data-tab="${tab}"]`).classList.add("active");
 
-  document.getElementById("signupForm").onsubmit = async (e) => {
-    e.preventDefault();
+  document.getElementById("loginForm").style.display = tab === "login" ? "block" : "none";
+  document.getElementById("signupForm").style.display = tab === "signup" ? "block" : "none";
+  document.getElementById("forgotForm").style.display = tab === "forgot" ? "block" : "none";
+}
 
-    const email = document.getElementById("signupEmail").value;
-    const password = document.getElementById("signupPassword").value;
-    const status = document.getElementById("signupStatus");
+document.querySelectorAll(".tab").forEach(tab => {
+  tab.onclick = () => showTab(tab.dataset.tab);
+});
 
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      status.className = "success";
-      status.textContent = "Compte créé avec succès !";
-      setTimeout(() => modal.classList.remove("active"), 1000);
-    } catch (err) {
-      status.className = "error";
-      status.textContent = err.code === "auth/email-already-in-use"
-        ? "Cet email est déjà utilisé"
-        : "Erreur : " + err.message;
-    }
-  };
+document.getElementById("loginForm").onsubmit = async (e) => {
+  e.preventDefault();
 
-  document.getElementById("forgotForm").onsubmit = async (e) => {
-    e.preventDefault();
+  try {
+    await signInWithEmailAndPassword(
+      auth,
+      document.getElementById("loginEmail").value,
+      document.getElementById("loginPassword").value
+    );
 
-    const email = document.getElementById("forgotEmail").value;
-    const status = document.getElementById("forgotStatus");
+    modal.classList.remove("active");
+  } catch(error){
+    document.getElementById("loginStatus").textContent = "Erreur : " + error.message;
+  }
+};
 
-    try {
-      await sendPasswordResetEmail(auth, email);
-      status.className = "success";
-      status.textContent = "Lien de réinitialisation envoyé ! Vérifie tes emails.";
-    } catch (err) {
-      status.className = "error";
-      status.textContent = "Erreur : " + err.message;
-    }
-  };
+document.getElementById("signupForm").onsubmit = async (e) => {
+  e.preventDefault();
 
-  emailjs.init(EMAILJS_PUBLIC_KEY);
+  try {
+    await createUserWithEmailAndPassword(
+      auth,
+      document.getElementById("signupEmail").value,
+      document.getElementById("signupPassword").value
+    );
 
-  document.getElementById("contactForm").onsubmit = function(e) {
-    e.preventDefault();
+    modal.classList.remove("active");
+  } catch(error){
+    document.getElementById("signupStatus").textContent = "Erreur : " + error.message;
+  }
+};
 
-    const status = document.getElementById("contactStatus");
-    status.textContent = "Envoi en cours...";
-    status.className = "";
+document.getElementById("forgotForm").onsubmit = async (e) => {
+  e.preventDefault();
 
-    emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
-      .then(() => {
-        status.className = "success";
-        status.textContent = "Message envoyé avec succès ! Nous te répondrons bientôt.";
-        this.reset();
-      })
-      .catch((err) => {
-        status.className = "error";
-        status.textContent = "Erreur lors de l'envoi. Réessaie plus tard.";
-        console.error(err);
+  try {
+    await sendPasswordResetEmail(
+      auth,
+      document.getElementById("forgotEmail").value
+    );
+
+    document.getElementById("forgotStatus").textContent = "Lien envoyé !";
+  } catch(error){
+    document.getElementById("forgotStatus").textContent = "Erreur : " + error.message;
+  }
+};
+
+emailjs.init(EMAILJS_PUBLIC_KEY);
+
+document.getElementById("contactForm").onsubmit = function(e){
+  e.preventDefault();
+
+  emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
+    .then(() => {
+      document.getElementById("contactStatus").textContent = "Message envoyé !";
+      this.reset();
+    })
+    .catch(() => {
+      document.getElementById("contactStatus").textContent = "Erreur lors de l’envoi.";
+    });
+};
+
+async function countArticleView(articleId){
+  const articleRef = doc(db, "articleViews", articleId);
+
+  try {
+    const snapshot = await getDoc(articleRef);
+
+    if(snapshot.exists()){
+      await updateDoc(articleRef, {
+        views: increment(1)
       });
-  };
+    } else {
+      await setDoc(articleRef, {
+        views: 1
+      });
+    }
+
+    const updated = await getDoc(articleRef);
+    const viewsElement = document.getElementById("views-" + articleId);
+
+    if(viewsElement){
+      viewsElement.textContent = "👁️ " + (updated.data().views || 0) + " vues";
+    }
+
+  } catch(error){
+    console.error(error);
+  }
+}
+
+function loadComments(articleId){
+  const commentsList = document.getElementById("comments-" + articleId);
+  if(!commentsList) return;
+
+  const commentsQuery = query(
+    collection(db, "comments"),
+    where("articleId", "==", articleId),
+    orderBy("createdAt", "desc")
+  );
+
+  onSnapshot(commentsQuery, (snapshot) => {
+    commentsList.innerHTML = "";
+
+    if(snapshot.empty){
+      commentsList.innerHTML = "<p class='comment-text'>Aucun commentaire pour le moment.</p>";
+      return;
+    }
+
+    snapshot.forEach(doc => {
+      const data = doc.data();
+
+      const comment = document.createElement("div");
+      comment.className = "comment";
+
+      comment.innerHTML = `
+        <div class="comment-name">${data.name}</div>
+        <div class="comment-text">${data.text}</div>
+      `;
+
+      commentsList.appendChild(comment);
+    });
+  });
+}
+
+document.addEventListener("submit", async function(event){
+  const form = event.target.closest(".comment-form");
+  if(!form) return;
+
+  event.preventDefault();
+
+  const articleId = form.getAttribute("data-article");
+  const name = form.querySelector(".comment-name").value.trim();
+  const text = form.querySelector(".comment-text").value.trim();
+
+  if(!name || !text) return;
+
+  try {
+    await addDoc(collection(db, "comments"), {
+      articleId: articleId,
+      name: name,
+      text: text,
+      createdAt: serverTimestamp()
+    });
+
+    form.reset();
+  } catch(error){
+    alert("Erreur lors de l’envoi du commentaire.");
+  }
+});
 </script>
 
 <script>
 const articleData = {
-  article1:{title:"5 conseils pour progresser rapidement en gaming",category:"GAMING",text:"Améliore ta visée, tes réflexes et ta stratégie avec une méthode simple."},
-  article2:{title:"Optimise ton Android pour le gaming",category:"TECH",text:"Réduis les lags, améliore les performances et profite mieux de tes jeux mobiles."},
-  article3:{title:"Protège tes comptes de jeu et tes données",category:"SÉCURITÉ",text:"Quelques habitudes simples pour éviter le piratage et protéger ta progression."},
-  article4:{title:"10 conseils pour survivre plus longtemps en Battle Royale",category:"FREE FIRE",text:"Choisis bien tes atterrissages, gère tes ressources et évite les combats inutiles."},
-  article5:{title:"Clash Squad : comment gagner plus de rounds",category:"FREE FIRE",text:"Position, économie, communication et choix d’armes pour dominer tes matchs."},
-  article6:{title:"Comment trouver ta meilleure sensibilité dans Free Fire",category:"FREE FIRE",text:"Un guide simple pour améliorer ta visée, tes mouvements et ta précision."},
-  article7:{title:"Les meilleures armes selon ton style de jeu",category:"FREE FIRE",text:"Choisis entre agressivité, précision à distance et polyvalence en combat."},
-  article8:{title:"DLS : construire une équipe équilibrée sans dépenser trop",category:"DLS",text:"Défense solide, milieu créatif et attaque efficace : la base d’une bonne équipe."},
-  article9:{title:"7 astuces pour marquer plus facilement dans DLS",category:"DLS",text:"Améliore tes frappes, tes passes et tes mouvements devant le but."},
-  article10:{title:"Les meilleures formations pour progresser en DLS",category:"DLS",text:"4-3-3, 4-4-2 ou 3-5-2 : choisis la tactique adaptée à tes joueurs."},
-  article11:{title:"eFootball : 8 conseils pour mieux contrôler le ballon",category:"EFOOTBALL",text:"Contrôle, passes, dribbles et timing pour jouer avec plus de fluidité."},
-  article12:{title:"Comment créer une Dream Team forte dans eFootball",category:"EFOOTBALL",text:"Choisis des joueurs complémentaires et développe-les intelligemment."},
-  article13:{title:"eFootball : les bases d’une bonne défense",category:"EFOOTBALL",text:"Ne cours pas partout : anticipe, bloque les espaces et défends en équipe."},
-  article14:{title:"7 réglages Android pour mieux jouer à Free Fire et DLS",category:"TECH",text:"Réduis les lags, la surchauffe et les coupures pendant tes parties."},
-  article15:{title:"Évite les faux sites de diamants et de pièces dans les jeux",category:"SÉCURITÉ",text:"Reconnais les arnaques qui ciblent les joueurs de Free Fire, DLS et eFootball."},
-  article16:{title:"Wi‑Fi ou données mobiles : quelle connexion pour le gaming ?",category:"TECH",text:"Comprends la latence, la stabilité et les bons réflexes pour jouer en ligne."},
-  article17:{title:"Préserve la batterie de ton téléphone quand tu joues souvent",category:"TECH",text:"Évite la surchauffe et garde de meilleures performances sur le long terme."},
-  article18:{title:"Sécurise ton compte Google, Facebook et tes jeux mobiles",category:"SÉCURITÉ",text:"Double authentification, mots de passe uniques et récupération de compte."}
+  article1:{
+    title:"5 conseils pour progresser rapidement en gaming",
+    category:"GAMING",
+    text:"Améliore ta visée, tes réflexes et ta stratégie avec une méthode simple.",
+    image:"https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=600&q=80"
+  },
+  article2:{
+    title:"Optimise ton Android pour le gaming",
+    category:"TECH",
+    text:"Réduis les lags, améliore les performances et profite mieux de tes jeux mobiles.",
+    image:"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80"
+  },
+  article3:{
+    title:"Protège tes comptes de jeu et tes données",
+    category:"SÉCURITÉ",
+    text:"Quelques habitudes simples pour éviter le piratage et protéger ta progression.",
+    image:"https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80"
+  },
+  article4:{
+    title:"10 conseils pour survivre plus longtemps en Battle Royale",
+    category:"FREE FIRE",
+    text:"Choisis bien tes atterrissages, gère tes ressources et évite les combats inutiles.",
+    image:"https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
+  },
+  article5:{
+    title:"Clash Squad : comment gagner plus de rounds",
+    category:"FREE FIRE",
+    text:"Position, économie, communication et choix d’armes pour dominer tes matchs.",
+    image:"https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=600&q=80"
+  },
+  article6:{
+    title:"Comment trouver ta meilleure sensibilité dans Free Fire",
+    category:"FREE FIRE",
+    text:"Un guide simple pour améliorer ta visée, tes mouvements et ta précision.",
+    image:"https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
+  },
+  article7:{
+    title:"Les meilleures armes selon ton style de jeu",
+    category:"FREE FIRE",
+    text:"Choisis entre agressivité, précision à distance et polyvalence en combat.",
+    image:"https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=600&q=80"
+  },
+  article8:{
+    title:"DLS : construire une équipe équilibrée sans dépenser trop",
+    category:"DLS",
+    text:"Défense solide, milieu créatif et attaque efficace : la base d’une bonne équipe.",
+    image:"https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=600&q=80"
+  },
+  article9:{
+    title:"7 astuces pour marquer plus facilement dans DLS",
+    category:"DLS",
+    text:"Améliore tes frappes, tes passes et tes mouvements devant le but.",
+    image:"https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80"
+  },
+  article10:{
+    title:"Les meilleures formations pour progresser en DLS",
+    category:"DLS",
+    text:"4-3-3, 4-4-2 ou 3-5-2 : choisis la tactique adaptée à tes joueurs.",
+    image:"https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=600&q=80"
+  },
+  article11:{
+    title:"eFootball : 8 conseils pour mieux contrôler le ballon",
+    category:"EFOOTBALL",
+    text:"Contrôle, passes, dribbles et timing pour jouer avec plus de fluidité.",
+    image:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=600&q=80"
+  },
+  article12:{
+    title:"Comment créer une Dream Team forte dans eFootball",
+    category:"EFOOTBALL",
+    text:"Choisis des joueurs complémentaires et développe-les intelligemment.",
+    image:"https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=600&q=80"
+  },
+  article13:{
+    title:"eFootball : les bases d’une bonne défense",
+    category:"EFOOTBALL",
+    text:"Ne cours pas partout : anticipe, bloque les espaces et défends en équipe.",
+    image:"https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&w=600&q=80"
+  },
+  article14:{
+    title:"7 réglages Android pour mieux jouer à Free Fire et DLS",
+    category:"TECH",
+    text:"Réduis les lags, la surchauffe et les coupures pendant tes parties.",
+    image:"https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=600&q=80"
+  },
+  article15:{
+    title:"Évite les faux sites de diamants et de pièces dans les jeux",
+    category:"SÉCURITÉ",
+    text:"Reconnais les arnaques qui ciblent les joueurs de Free Fire, DLS et eFootball.",
+    image:"https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80"
+  },
+  article16:{
+    title:"Wi‑Fi ou données mobiles : quelle connexion pour le gaming ?",
+    category:"TECH",
+    text:"Comprends la latence, la stabilité et les bons réflexes pour jouer en ligne.",
+    image:"https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=600&q=80"
+  },
+  article17:{
+    title:"Préserve la batterie de ton téléphone quand tu joues souvent",
+    category:"TECH",
+    text:"Évite la surchauffe et garde de meilleures performances sur le long terme.",
+    image:"https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=600&q=80"
+  },
+  article18:{
+    title:"Sécurise ton compte Google, Facebook et tes jeux mobiles",
+    category:"SÉCURITÉ",
+    text:"Double authentification, mots de passe uniques et récupération de compte.",
+    image:"https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80"
+  }
 };
 
 function openArticle(articleId){
   const blogList = document.getElementById("blogList");
   const articles = document.querySelectorAll(".article");
 
-  if (blogList) blogList.style.display = "none";
+  if(blogList) blogList.style.display = "none";
 
   articles.forEach(article => article.classList.remove("active"));
 
   const selected = document.getElementById(articleId);
 
-  if (selected) {
+  if(selected){
     selected.classList.add("active");
     addRelatedPosts(articleId);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    countArticleView(articleId);
+    loadComments(articleId);
+    window.scrollTo({ top:0, behavior:"smooth" });
   }
 }
 
@@ -1302,10 +1524,9 @@ function closeArticle(){
 
   articles.forEach(article => article.classList.remove("active"));
 
-  if (blogList) blogList.style.display = "grid";
+  if(blogList) blogList.style.display = "grid";
 
-  const blogSection = document.getElementById("blog");
-  if (blogSection) blogSection.scrollIntoView({ behavior: "smooth" });
+  document.getElementById("blog").scrollIntoView({ behavior:"smooth" });
 }
 
 function addRelatedPosts(currentArticleId){
@@ -1317,12 +1538,12 @@ function addRelatedPosts(currentArticleId){
   const related = Object.keys(articleData)
     .filter(id => id !== currentArticleId)
     .map(id => ({ id, ...articleData[id] }))
-    .sort((a, b) => {
+    .sort((a,b) => {
       const aSame = a.category === current.category ? 0 : 1;
       const bSame = b.category === current.category ? 0 : 1;
       return aSame - bSame;
     })
-    .slice(0, 3);
+    .slice(0,3);
 
   const currentArticle = document.getElementById(currentArticleId);
   const backButton = currentArticle.querySelector(".back-btn");
@@ -1333,13 +1554,16 @@ function addRelatedPosts(currentArticleId){
   relatedSection.className = "related-posts";
 
   relatedSection.innerHTML = `
-    <h3>Articles recommandés</h3>
+    <h3>Articles similaires</h3>
     <div class="related-grid">
       ${related.map(post => `
         <div class="related-card" data-article="${post.id}">
-          <div class="tag">${post.category}</div>
-          <h4>${post.title}</h4>
-          <p>${post.text}</p>
+          <img src="${post.image}" alt="${post.title}">
+          <div class="related-content">
+            <div class="tag">${post.category}</div>
+            <h4>${post.title}</h4>
+            <p>${post.text}</p>
+          </div>
         </div>
       `).join("")}
     </div>
@@ -1348,99 +1572,57 @@ function addRelatedPosts(currentArticleId){
   backButton.parentNode.insertBefore(relatedSection, backButton);
 }
 
-document.addEventListener("click", function(event){
+document.addEventListener("click", async function(event){
   const readButton = event.target.closest(".read-more");
   const relatedCard = event.target.closest(".related-card");
   const backButton = event.target.closest(".back-btn");
+  const shareButton = event.target.closest(".share-btn");
 
-  if (relatedCard) {
+  if(relatedCard){
     const articleId = relatedCard.getAttribute("data-article");
-    if (articleId) openArticle(articleId);
+    if(articleId) openArticle(articleId);
     return;
   }
 
-  if (readButton) {
+  if(readButton){
     const articleId = readButton.getAttribute("data-article");
-    if (articleId) openArticle(articleId);
+    if(articleId) openArticle(articleId);
     return;
   }
 
-  if (backButton) closeArticle();
+  if(backButton){
+    closeArticle();
+    return;
+  }
+
+  if(shareButton){
+    const title = shareButton.getAttribute("data-title");
+    const url = window.location.href;
+
+    if(navigator.share){
+      try {
+        await navigator.share({
+          title:title,
+          text:"Découvre cet article sur GEN7PLAY : " + title,
+          url:url
+        });
+      } catch(error){}
+    } else {
+      await navigator.clipboard.writeText(url);
+      alert("Lien copié !");
+    }
+  }
 });
-</script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+document.getElementById("blogSearch").addEventListener("input", function(){
+  const value = this.value.toLowerCase();
+  const cards = document.querySelectorAll("#blogList .card");
 
-<script>
-(function(){
-  const canvas = document.getElementById('bg-canvas');
-  if(!canvas) return;
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
-
-  renderer.setSize(window.innerWidth, window.innerHeight);
-
-  const particlesCount = 120;
-  const geometry = new THREE.BufferGeometry();
-  const positions = new Float32Array(particlesCount * 3);
-  const colors = new Float32Array(particlesCount * 3);
-
-  for(let i=0;i<particlesCount*3;i+=3){
-    positions[i] = (Math.random()-0.5)*40;
-    positions[i+1] = (Math.random()-0.5)*25;
-    positions[i+2] = (Math.random()-0.5)*20;
-
-    const t = Math.random();
-    colors[i] = 0 + t*0.2;
-    colors[i+1] = 0.8 + t*0.2;
-    colors[i+2] = 0.5 + t*0.5;
-  }
-
-  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-  const material = new THREE.PointsMaterial({
-    size:0.12,
-    vertexColors:true,
-    transparent:true,
-    opacity:0.7
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = text.includes(value) ? "block" : "none";
   });
-
-  const particles = new THREE.Points(geometry, material);
-  scene.add(particles);
-
-  camera.position.z = 12;
-
-  let mouseX=0, mouseY=0;
-
-  document.addEventListener('mousemove', (e)=>{
-    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-  });
-
-  function animate(){
-    requestAnimationFrame(animate);
-
-    particles.rotation.y += 0.0012;
-    particles.rotation.x += 0.0006;
-
-    camera.position.x += (mouseX * 1.5 - camera.position.x) * 0.05;
-    camera.position.y += (-mouseY * 1.2 - camera.position.y) * 0.05;
-
-    camera.lookAt(scene.position);
-    renderer.render(scene, camera);
-  }
-
-  animate();
-
-  window.addEventListener('resize', ()=>{
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  });
-})();
+});
 </script>
 
 </body>
