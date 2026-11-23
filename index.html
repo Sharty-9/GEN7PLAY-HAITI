@@ -148,7 +148,6 @@ section{padding:90px 6%}
   border:2px solid var(--accent);color:var(--accent);
 }
 .back-btn:hover{background:var(--accent);color:#04150e}
-
 .search-box{
   max-width:520px;
   margin:0 auto 35px;
@@ -266,6 +265,44 @@ section{padding:90px 6%}
   color:var(--muted);
   line-height:1.5;
 }
+.championship-card{
+  background:rgba(15,23,42,0.7);
+  border:1px solid var(--border);
+  border-radius:18px;
+  overflow:hidden;
+  text-align:center;
+  padding:30px 22px;
+  transition:all .3s;
+}
+.championship-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(0,245,160,0.4);
+  box-shadow:0 20px 40px rgba(0,0,0,.4);
+}
+.championship-icon{
+  font-size:45px;
+  margin-bottom:15px;
+}
+.championship-card h3{
+  font-size:20px;
+  margin-bottom:10px;
+}
+.championship-card p{
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.6;
+  margin-bottom:18px;
+}
+.soon-badge{
+  display:inline-block;
+  padding:8px 18px;
+  border-radius:999px;
+  background:rgba(0,245,160,0.12);
+  border:1px solid rgba(0,245,160,0.35);
+  color:var(--accent);
+  font-weight:700;
+  font-size:13px;
+}
 .modal{
   display:none;position:fixed;inset:0;
   background:rgba(0,0,0,.75);z-index:200;
@@ -316,6 +353,7 @@ footer span{color:var(--accent);font-weight:700}
   <nav>
     <a href="#home">Accueil</a>
     <a href="#blog">Blog</a>
+    <a href="#championnat">Championnat</a>
     <a href="#contact">Contact</a>
     <a href="https://whatsapp.com/channel/0029Vb99MNz2f3EPTXFQU411" target="_blank">Chaîne WhatsApp</a>
 
@@ -332,6 +370,10 @@ footer span{color:var(--accent);font-weight:700}
 
       <div class="dropdown" id="userDropdown">
         <div id="userEmailDisplay"></div>
+        <a href="#home">Accueil</a>
+        <a href="#blog">Blog</a>
+        <a href="#championnat">Championnat</a>
+        <a href="#contact">Contact</a>
         <button id="logoutBtn">Déconnexion</button>
       </div>
     </div>
@@ -658,7 +700,6 @@ footer span{color:var(--accent);font-weight:700}
     </div>
 
   </div>
-
   <article class="article" id="article1">
     <img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=1200&q=80" alt="Gaming">
     <div class="tag">GAMING</div>
@@ -1315,7 +1356,6 @@ footer span{color:var(--accent);font-weight:700}
 
     <button class="btn back-btn">← Retour au blog</button>
   </article>
-
   <article class="article" id="article16">
     <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=1200&q=80" alt="Wi-Fi">
     <div class="tag">TECH</div>
@@ -1525,7 +1565,7 @@ footer span{color:var(--accent);font-weight:700}
   <article class="article" id="article21">
     <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80" alt="Squad">
     <div class="tag">FREE FIRE</div>
-    <h3>Les rôles importants dans une squad Free Fire</h3>
+    <h2>Les rôles importants dans une squad Free Fire</h2>
 
     <div class="article-meta">
       <span id="views-article21">👁️ 0 vues</span>
@@ -1952,6 +1992,43 @@ footer span{color:var(--accent);font-weight:700}
     <button class="btn back-btn">← Retour au blog</button>
   </article>
 
+</section>
+<section id="championnat">
+  <h2 class="section-title">🏆 Championnat GEN7PLAY</h2>
+  <p class="section-sub">
+    Choisis ta catégorie et prépare-toi pour les prochaines compétitions GEN7PLAY.
+  </p>
+
+  <div class="grid">
+
+    <div class="championship-card">
+      <div class="championship-icon">🔥</div>
+      <h3>Free Fire</h3>
+      <p>
+        Tournois, Clash Squad, Battle Royale et défis entre joueurs GEN7PLAY.
+      </p>
+      <span class="soon-badge">Bientôt Disponible</span>
+    </div>
+
+    <div class="championship-card">
+      <div class="championship-icon">⚽</div>
+      <h3>DLS</h3>
+      <p>
+        Compétitions Dream League Soccer, matchs amicaux et tournois entre membres.
+      </p>
+      <span class="soon-badge">Bientôt Disponible</span>
+    </div>
+
+    <div class="championship-card">
+      <div class="championship-icon">🎮</div>
+      <h3>eFootball</h3>
+      <p>
+        Tournois eFootball, matchs compétitifs et défis entre joueurs de la communauté.
+      </p>
+      <span class="soon-badge">Bientôt Disponible</span>
+    </div>
+
+  </div>
 </section>
 
 <section id="contact">
@@ -2479,5 +2556,4 @@ window.addEventListener("load", function(){
 </script>
 
 </body>
-</html>
 </html>
